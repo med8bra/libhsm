@@ -1,5 +1,7 @@
 # libhsm
-C/C++ shared library that can be compiled with g++/gcc on Linux 64-bit.  The library provides a simplified API for access the PKCS#11 API to support higher level languages.  Compiles with OASIS PKCS#11 v2.20. 
+C/C++ shared library that can be compiled with g++/gcc on Linux 64-bit.  The library provides a simplified API for access the PKCS#11 API to support higher level languages.  Compiles with OASIS PKCS#11 v2.20.
+
+This a fork from the origin at [bentonstark/libhsm](https://github.com/bentonstark/libhsm)
 
 ## Supported HSMs
 The libhsm library has been tested to work with the following HSMs.  Not all mechanisms are supported across the HSM vendors.
