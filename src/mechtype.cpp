@@ -8,7 +8,7 @@
 // Sept. 7, 2016
 //----------------------------------------------------------------------------------------
 
-#include "mechtype.h"
+#include <mechtype.h>
 
 // pkcs11-curr-v2.40-os mechanism definitions
 #define CKM_DSA_SHA3_224                                 0x00000018

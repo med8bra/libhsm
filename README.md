@@ -1,5 +1,5 @@
 # libhsm
-C/C++ shared library that can be compiled with g++/gcc on Linux 64-bit and Windows 64-bit using Visual Studio or g++/gcc.  The library provides a simplified API for access the PKCS#11 API to support higher level languages.  Compiles with OASIS PKCS#11 v2.20. 
+C/C++ shared library that can be compiled with g++/gcc on Linux 64-bit.  The library provides a simplified API for access the PKCS#11 API to support higher level languages.  Compiles with OASIS PKCS#11 v2.20. 
 
 ## Supported HSMs
 The libhsm library has been tested to work with the following HSMs.  Not all mechanisms are supported across the HSM vendors.
@@ -17,18 +17,23 @@ The libhsm library has been tested to work with the following HSMs.  Not all mec
 		
 Note: Latest Cavium firmware requires CKA_DERIVE statements to be commented out from all templates.		
 		
-## CentOS Build	
+## Build	
 ```
-$ sudo yum install gcc-c++
-$ cd libhsm/build
-$ ./build_libhsm
+$ mkdir build && cd build
+$ cmake ..
+$ make
 ```
 
-## CentOS Install
+## Install
 ```
-$ sudo cp libhsm/build/libhsm.so /usr/lib64/libhsm.so
+$ sudo make install
+```
+
+## Uninstall
+```
+$ sudo make uninstall
 ```
 	
 ## Header File Exports
 
-https://github.com/bentonstark/libhsm/blob/master/src/p11hsm.h
+[p11hsm.h header](include/p11hsm.h)
