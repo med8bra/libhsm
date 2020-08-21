@@ -217,8 +217,8 @@ CK_RV __wrap_key(CK_SESSION_HANDLE h_session, CK_BYTE_PTR wrap_buf, CK_ULONG_PTR
 //     sensitive          -- 1 to indicate the private key is sensitive; otherwise 0
 //     modifiable         -- 1 to indicate the private key can be modified; otherwise 0
 //     extractable        -- 1 to indicate the private key can be extracted; otherwise 0
-//     sign               -- 1 to indicate the private key can sign; otherwise 0
-//     decrypt            -- 1 to indicate the private key can decrypt; otherwise 0
+//     P11HSM_sign               -- 1 to indicate the private key can P11HSM_sign; otherwise 0
+//     P11HSM_decrypt            -- 1 to indicate the private key can P11HSM_decrypt; otherwise 0
 //     unwrap             -- 1 to indicate the private key can unwrap; otherwise 0
 //     derive             -- 1 to indicate the private key can be used to derive other keys; otherwise 0
 //     h_Key              -- handle of the newly unwrapped key
@@ -231,7 +231,7 @@ CK_RV __unwrap_private_key(CK_SESSION_HANDLE h_session, CK_OBJECT_HANDLE h_wrap_
                      CK_CHAR_PTR key_label, CK_ULONG key_label_len, CK_CHAR_PTR key_id, CK_ULONG key_id_len,
                      CK_BYTE_PTR key_buf, CK_ULONG key_buf_len,
                      CK_KEY_TYPE key_type, CK_BBOOL token, CK_BBOOL private_,CK_BBOOL sensitive, CK_BBOOL modifiable, CK_BBOOL extractable,
-                     CK_BBOOL sign, CK_BBOOL decrypt, CK_BBOOL unwrap, CK_BBOOL derive,
+                     CK_BBOOL P11HSM_sign, CK_BBOOL P11HSM_decrypt, CK_BBOOL unwrap, CK_BBOOL derive,
                      CK_OBJECT_HANDLE_PTR h_key)
 {
     CK_MECHANISM mech;
@@ -266,8 +266,8 @@ CK_RV __unwrap_private_key(CK_SESSION_HANDLE h_session, CK_OBJECT_HANDLE h_wrap_
         {CKA_TOKEN,         &token,           sizeof(token)},
         {CKA_SENSITIVE,     &sensitive,       sizeof(sensitive)},
         {CKA_PRIVATE,       &private_,        sizeof(private_)},
-        {CKA_DECRYPT,       &decrypt,         sizeof(decrypt)},
-        {CKA_SIGN,          &sign,            sizeof(sign)},
+        {CKA_DECRYPT,       &P11HSM_decrypt,         sizeof(P11HSM_decrypt)},
+        {CKA_SIGN,          &P11HSM_sign,            sizeof(P11HSM_sign)},
         {CKA_UNWRAP,        &unwrap,          sizeof(unwrap)},
         {CKA_DERIVE,        &derive,          sizeof(derive)},
         {CKA_MODIFIABLE,    &modifiable,      sizeof(modifiable)},
@@ -308,10 +308,10 @@ CK_RV __unwrap_private_key(CK_SESSION_HANDLE h_session, CK_OBJECT_HANDLE h_wrap_
 //     sensitive             -- 1 to indicate the private key is sensitive; otherwise 0
 //     modifiable            -- 1 to indicate the secret key can be modified; otherwise 0
 //     extractable           -- 1 to indicate the secret key can be extracted; otherwise 0
-//     sign                  -- 1 to indicate the secret key can sign; otherwise 0
-//     verify                -- 1 to indicate the secret key can verify; otherwise 0
-//     encrypt               -- 1 to indicate the secret key can encrypt; otherwise 0
-//     decrypt               -- 1 to indicate the secret key can decrypt; otherwise 0
+//     P11HSM_sign                  -- 1 to indicate the secret key can P11HSM_sign; otherwise 0
+//     P11HSM_verify                -- 1 to indicate the secret key can P11HSM_verify; otherwise 0
+//     P11HSM_encrypt               -- 1 to indicate the secret key can P11HSM_encrypt; otherwise 0
+//     P11HSM_decrypt               -- 1 to indicate the secret key can P11HSM_decrypt; otherwise 0
 //     wrap                  -- 1 to indicate the secret key can wrap; otherwise 0
 //     unwrap                -- 1 to indicate the secret key can unwrap; otherwise 0
 //     derive                -- 1 to indicate the secret key can be used to derive other keys; otherwise 0
@@ -324,8 +324,8 @@ CK_RV __unwrap_private_key(CK_SESSION_HANDLE h_session, CK_OBJECT_HANDLE h_wrap_
 CK_RV __unwrap_secret_key(CK_SESSION_HANDLE h_session, CK_OBJECT_HANDLE h_wrap_key, CK_BYTE_PTR iv, CK_ULONG iv_len, CK_MECHANISM_TYPE mech_type,
                           CK_CHAR_PTR key_label, CK_ULONG key_label_len, CK_CHAR_PTR key_id, CK_ULONG key_id_len,
                           CK_BYTE_PTR key_buf, CK_ULONG key_buf_len, CK_KEY_TYPE key_type, CK_ULONG key_size,
-                          CK_BBOOL token, CK_BBOOL private_, CK_BBOOL sensitive, CK_BBOOL modifiable, CK_BBOOL extractable, CK_BBOOL sign,
-                          CK_BBOOL verify, CK_BBOOL encrypt, CK_BBOOL decrypt, CK_BBOOL wrap, CK_BBOOL unwrap, CK_BBOOL derive,
+                          CK_BBOOL token, CK_BBOOL private_, CK_BBOOL sensitive, CK_BBOOL modifiable, CK_BBOOL extractable, CK_BBOOL P11HSM_sign,
+                          CK_BBOOL P11HSM_verify, CK_BBOOL P11HSM_encrypt, CK_BBOOL P11HSM_decrypt, CK_BBOOL wrap, CK_BBOOL unwrap, CK_BBOOL derive,
                           CK_OBJECT_HANDLE_PTR h_key)
 {
     CK_MECHANISM mech;
@@ -368,10 +368,10 @@ CK_RV __unwrap_secret_key(CK_SESSION_HANDLE h_session, CK_OBJECT_HANDLE h_wrap_k
         {CKA_TOKEN,         &token,             sizeof(token)},
         {CKA_SENSITIVE,     &sensitive,         sizeof(sensitive)},
         {CKA_PRIVATE,       &private_,          sizeof(private_)},
-        {CKA_ENCRYPT,       &encrypt,           sizeof(encrypt)},
-        {CKA_DECRYPT,       &decrypt,           sizeof(decrypt)},
-        {CKA_SIGN,          &sign,              sizeof(sign)},
-        {CKA_VERIFY,        &verify,            sizeof(verify)},
+        {CKA_ENCRYPT,       &P11HSM_encrypt,           sizeof(P11HSM_encrypt)},
+        {CKA_DECRYPT,       &P11HSM_decrypt,           sizeof(P11HSM_decrypt)},
+        {CKA_SIGN,          &P11HSM_sign,              sizeof(P11HSM_sign)},
+        {CKA_VERIFY,        &P11HSM_verify,            sizeof(P11HSM_verify)},
         {CKA_WRAP,          &wrap,              sizeof(wrap)},
         {CKA_UNWRAP,        &unwrap,            sizeof(unwrap)},
         {CKA_DERIVE,        &derive,            sizeof(derive)},
@@ -419,10 +419,10 @@ CK_RV __unwrap_secret_key(CK_SESSION_HANDLE h_session, CK_OBJECT_HANDLE h_wrap_k
 //     sensitive        -- 1 to indicate the private key is sensitive; otherwise 0
 //     modifiable       -- 1 to indicate the keys can be modified; otherwise 0
 //     extractable      -- 1 to indicate the private key can be extracted; otherwise 0
-//     sign             -- 1 to indicate the private key can sign; otherwise 0
-//     verify           -- 1 to indicate the public key can verify; otherwise 0
-//     encrypt          -- 1 to indicate the public key can encrypt; otherwise 0
-//     decrypt          -- 1 to indicate the private key can decrypt; otherwise 0
+//     P11HSM_sign             -- 1 to indicate the private key can P11HSM_sign; otherwise 0
+//     P11HSM_verify           -- 1 to indicate the public key can P11HSM_verify; otherwise 0
+//     P11HSM_encrypt          -- 1 to indicate the public key can P11HSM_encrypt; otherwise 0
+//     P11HSM_decrypt          -- 1 to indicate the private key can P11HSM_decrypt; otherwise 0
 //     wrap             -- 1 to indicate the public key can wrap; otherwise 0
 //     unwrap           -- 1 to indicate the private key can unwrap; otherwise 0
 //     derive           -- 1 to indicate the private key can be used to derive other keys; otherwise 0
@@ -437,8 +437,8 @@ CK_RV __gen_rsa_key_pair(CK_SESSION_HANDLE h_session, CK_ULONG key_size, CK_BYTE
                      CK_CHAR_PTR pub_label, CK_ULONG pub_label_len, CK_CHAR_PTR pvt_label, CK_ULONG pvt_label_len,
                      CK_BYTE_PTR pub_id, CK_ULONG pub_id_len, CK_BYTE_PTR pvt_id, CK_ULONG pvt_id_len,
                      CK_MECHANISM_TYPE mech_type, CK_BBOOL token, CK_BBOOL pub_private, CK_BBOOL pvt_private,
-                     CK_BBOOL sensitive, CK_BBOOL modifiable, CK_BBOOL extractable, CK_BBOOL sign,
-                     CK_BBOOL verify, CK_BBOOL encrypt, CK_BBOOL decrypt, CK_BBOOL wrap, CK_BBOOL unwrap, CK_BBOOL derive,
+                     CK_BBOOL sensitive, CK_BBOOL modifiable, CK_BBOOL extractable, CK_BBOOL P11HSM_sign,
+                     CK_BBOOL P11HSM_verify, CK_BBOOL P11HSM_encrypt, CK_BBOOL P11HSM_decrypt, CK_BBOOL wrap, CK_BBOOL unwrap, CK_BBOOL derive,
                      CK_OBJECT_HANDLE_PTR h_pub, CK_OBJECT_HANDLE_PTR h_pvt)
 {
     CK_RV rv = CKR_OK;
@@ -460,8 +460,8 @@ CK_RV __gen_rsa_key_pair(CK_SESSION_HANDLE h_session, CK_ULONG key_size, CK_BYTE
       {CKA_TOKEN,            &token,          sizeof(token)},
       {CKA_PRIVATE,          &pub_private,    sizeof(pub_private)},
       {CKA_MODIFIABLE,       &modifiable,     sizeof(modifiable)},
-      {CKA_ENCRYPT,          &encrypt,        sizeof(encrypt)},
-      {CKA_VERIFY,           &verify,         sizeof(verify)},
+      {CKA_ENCRYPT,          &P11HSM_encrypt,        sizeof(P11HSM_encrypt)},
+      {CKA_VERIFY,           &P11HSM_verify,         sizeof(P11HSM_verify)},
       {CKA_WRAP,             &wrap,           sizeof(wrap)},
       {CKA_MODULUS_BITS,     &key_size,       sizeof(key_size)},
       {CKA_PUBLIC_EXPONENT,  pub_exp,         pub_exp_len},
@@ -478,8 +478,8 @@ CK_RV __gen_rsa_key_pair(CK_SESSION_HANDLE h_session, CK_ULONG key_size, CK_BYTE
       {CKA_PRIVATE,          &pvt_private,   sizeof(pvt_private)},
       {CKA_MODIFIABLE,       &modifiable,    sizeof(modifiable)},
       {CKA_EXTRACTABLE,      &extractable,   sizeof(extractable)},
-      {CKA_DECRYPT,          &decrypt,       sizeof(decrypt)},
-      {CKA_SIGN,             &sign,          sizeof(sign)},
+      {CKA_DECRYPT,          &P11HSM_decrypt,       sizeof(P11HSM_decrypt)},
+      {CKA_SIGN,             &P11HSM_sign,          sizeof(P11HSM_sign)},
       {CKA_UNWRAP,           &unwrap,        sizeof(unwrap)},
       {CKA_DERIVE,           &derive,        sizeof(derive)},
       {CKA_ID,               &pvt_id,        pvt_id_len},
@@ -523,10 +523,10 @@ CK_RV __gen_rsa_key_pair(CK_SESSION_HANDLE h_session, CK_ULONG key_size, CK_BYTE
 //     sensitive            -- 1 to indicate the private key is sensitive; otherwise 0
 //     modifiable           -- 1 to indicate the keys can be modified; otherwise 0
 //     extractable          -- 1 to indicate the private key can be extracted; otherwise 0
-//     sign                 -- 1 to indicate the private key can sign; otherwise 0
-//     verify               -- 1 to indicate the public key can verify; otherwise 0
-//     encrypt              -- 1 to indicate the public key can encrypt; otherwise 0
-//     decrypt              -- 1 to indicate the private key can decrypt; otherwise 0
+//     P11HSM_sign                 -- 1 to indicate the private key can P11HSM_sign; otherwise 0
+//     P11HSM_verify               -- 1 to indicate the public key can P11HSM_verify; otherwise 0
+//     P11HSM_encrypt              -- 1 to indicate the public key can P11HSM_encrypt; otherwise 0
+//     P11HSM_decrypt              -- 1 to indicate the private key can P11HSM_decrypt; otherwise 0
 //     wrap                 -- 1 to indicate the public key can wrap; otherwise 0
 //     unwrap               -- 1 to indicate the private key can unwrap; otherwise 0
 //     derive               -- 1 to indicate the private key can be used to derive other keys; otherwise 0
@@ -541,8 +541,8 @@ CK_RV __gen_rsa_key_pair(CK_SESSION_HANDLE h_session, CK_ULONG key_size, CK_BYTE
 CK_RV __gen_ec_key_pair(CK_SESSION_HANDLE h_session, CK_BYTE_PTR ec_params, CK_ULONG ec_params_len,
                      CK_CHAR_PTR pub_label, CK_ULONG pub_label_len, CK_CHAR_PTR pvt_label, CK_ULONG pvt_label_len,
                      CK_BYTE_PTR pub_id, CK_ULONG pub_id_len, CK_BYTE_PTR pvt_id, CK_ULONG pvt_id_len,
-                     CK_BBOOL token, CK_BBOOL pub_private, CK_BBOOL pvt_private, CK_BBOOL sensitive, CK_BBOOL modifable, CK_BBOOL extractable, CK_BBOOL sign,
-                     CK_BBOOL verify, CK_BBOOL encrypt, CK_BBOOL decrypt, CK_BBOOL wrap, CK_BBOOL unwrap, CK_BBOOL derive,
+                     CK_BBOOL token, CK_BBOOL pub_private, CK_BBOOL pvt_private, CK_BBOOL sensitive, CK_BBOOL modifable, CK_BBOOL extractable, CK_BBOOL P11HSM_sign,
+                     CK_BBOOL P11HSM_verify, CK_BBOOL P11HSM_encrypt, CK_BBOOL P11HSM_decrypt, CK_BBOOL wrap, CK_BBOOL unwrap, CK_BBOOL derive,
                      CK_OBJECT_HANDLE_PTR h_pub_key, CK_OBJECT_HANDLE_PTR h_pvt_key)
 {
     CK_RV rv = CKR_OK;
@@ -558,10 +558,10 @@ CK_RV __gen_ec_key_pair(CK_SESSION_HANDLE h_session, CK_BYTE_PTR ec_params, CK_U
     CK_ATTRIBUTE pub_template[] = {
       {CKA_TOKEN,           &token,         sizeof(token)},
       {CKA_PRIVATE,         &pub_private,   sizeof(pub_private)},
-      {CKA_VERIFY,          &verify,        sizeof(verify)},
+      {CKA_VERIFY,          &P11HSM_verify,        sizeof(P11HSM_verify)},
       {CKA_DERIVE,          &derive,        sizeof(derive)},
       {CKA_MODIFIABLE,      &modifable,     sizeof(modifable)},
-      {CKA_ENCRYPT,         &encrypt,       sizeof(encrypt)},
+      {CKA_ENCRYPT,         &P11HSM_encrypt,       sizeof(P11HSM_encrypt)},
       {CKA_WRAP,            &wrap,          sizeof(wrap)},
       {CKA_EC_PARAMS,       ec_params,      ec_params_len},
       {CKA_ID,              &pub_id,        pub_id_len},
@@ -573,11 +573,11 @@ CK_RV __gen_ec_key_pair(CK_SESSION_HANDLE h_session, CK_BYTE_PTR ec_params, CK_U
       {CKA_TOKEN,           &token,          sizeof(token)},
       {CKA_SENSITIVE,       &sensitive,      sizeof(sensitive)},
       {CKA_PRIVATE,         &pvt_private,    sizeof(pvt_private)},
-      {CKA_SIGN,            &sign,           sizeof(sign)},
+      {CKA_SIGN,            &P11HSM_sign,           sizeof(P11HSM_sign)},
       {CKA_DERIVE,          &derive,         sizeof(derive)},
       {CKA_EXTRACTABLE,     &extractable,    sizeof(extractable)},
       {CKA_MODIFIABLE,      &modifable,      sizeof(modifable)},
-      {CKA_DECRYPT,         &decrypt,        sizeof(decrypt)},
+      {CKA_DECRYPT,         &P11HSM_decrypt,        sizeof(P11HSM_decrypt)},
       {CKA_UNWRAP,          &unwrap,         sizeof(unwrap)},
       {CKA_ID,              &pvt_id,         pvt_id_len},
       {CKA_LABEL,           pvt_label,       pvt_label_len},
@@ -614,10 +614,10 @@ CK_RV __gen_ec_key_pair(CK_SESSION_HANDLE h_session, CK_BYTE_PTR ec_params, CK_U
 //     sensitive        -- 1 to indicate the private key is sensitive; otherwise 0
 //     modifiable       -- 1 to indicate the keys can be modified; otherwise 0
 //     extractable      -- 1 to indicate the private key can be extracted; otherwise 0
-//     sign             -- 1 to indicate the private key can sign; otherwise 0
-//     verify           -- 1 to indicate the public key can verify; otherwise 0
-//     encrypt          -- 1 to indicate the public key can encrypt; otherwise 0
-//     decrypt          -- 1 to indicate the private key can decrypt; otherwise 0
+//     P11HSM_sign             -- 1 to indicate the private key can P11HSM_sign; otherwise 0
+//     P11HSM_verify           -- 1 to indicate the public key can P11HSM_verify; otherwise 0
+//     P11HSM_encrypt          -- 1 to indicate the public key can P11HSM_encrypt; otherwise 0
+//     P11HSM_decrypt          -- 1 to indicate the private key can P11HSM_decrypt; otherwise 0
 //     wrap             -- 1 to indicate the public key can wrap; otherwise 0
 //     unwrap           -- 1 to indicate the private key can unwrap; otherwise 0
 //     derive           -- 1 to indicate the private key can be used to derive other keys; otherwise 0
@@ -631,8 +631,8 @@ CK_RV __gen_ec_key_pair(CK_SESSION_HANDLE h_session, CK_BYTE_PTR ec_params, CK_U
 CK_RV __gen_secret_key(CK_SESSION_HANDLE h_session,
                      CK_CHAR_PTR key_label, CK_ULONG key_label_len, CK_CHAR_PTR key_id, CK_ULONG key_id_len,
                      CK_MECHANISM_TYPE mech_type, CK_ULONG key_size,
-                     CK_BBOOL token, CK_BBOOL private_, CK_BBOOL sensitive, CK_BBOOL modifiable, CK_BBOOL extractable, CK_BBOOL sign,
-                     CK_BBOOL verify, CK_BBOOL encrypt, CK_BBOOL decrypt, CK_BBOOL wrap, CK_BBOOL unwrap, CK_BBOOL derive,
+                     CK_BBOOL token, CK_BBOOL private_, CK_BBOOL sensitive, CK_BBOOL modifiable, CK_BBOOL extractable, CK_BBOOL P11HSM_sign,
+                     CK_BBOOL P11HSM_verify, CK_BBOOL P11HSM_encrypt, CK_BBOOL P11HSM_decrypt, CK_BBOOL wrap, CK_BBOOL unwrap, CK_BBOOL derive,
                      CK_OBJECT_HANDLE_PTR h_key)
 {
     CK_RV rv = CKR_OK;
@@ -651,10 +651,10 @@ CK_RV __gen_secret_key(CK_SESSION_HANDLE h_session,
       {CKA_TOKEN,        &token,          sizeof(token)},
       {CKA_SENSITIVE,    &sensitive,      sizeof(sensitive)},
       {CKA_PRIVATE,      &private_,       sizeof(private_)},
-      {CKA_ENCRYPT,      &encrypt,        sizeof(encrypt)},
-      {CKA_DECRYPT,      &decrypt,        sizeof(decrypt)},
-      {CKA_SIGN,         &sign,           sizeof(sign)},
-      {CKA_VERIFY,       &verify,         sizeof(verify)},
+      {CKA_ENCRYPT,      &P11HSM_encrypt,        sizeof(P11HSM_encrypt)},
+      {CKA_DECRYPT,      &P11HSM_decrypt,        sizeof(P11HSM_decrypt)},
+      {CKA_SIGN,         &P11HSM_sign,           sizeof(P11HSM_sign)},
+      {CKA_VERIFY,       &P11HSM_verify,         sizeof(P11HSM_verify)},
       {CKA_WRAP,         &wrap,           sizeof(wrap)},
       {CKA_UNWRAP,       &unwrap,         sizeof(unwrap)},
       {CKA_DERIVE,       &derive,         sizeof(derive)},
@@ -774,18 +774,18 @@ CK_RV __get_modulus(CK_SESSION_HANDLE h_session, CK_OBJECT_HANDLE h_key, unsigne
     return rv;
 }
 
-int get_lib_version(char* msg_buf, unsigned long msg_buf_len, char *version_info, unsigned long version_info_len)
+int P11HSM_get_lib_version(char* msg_buf, unsigned long msg_buf_len, char *version_info, unsigned long version_info_len)
 {
 
     if (!version_info)
     {
-        snprintf(msg_buf, msg_buf_len, "get_lib_version: version_info variable is null.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_get_lib_version: version_info variable is null.");
         return FALSE;
     }
 
     if (version_info_len < HSMLIB_PRODUCT_VERSION_LEN)
     {
-        snprintf(msg_buf, msg_buf_len, "get_lib_version: version_info_len is less than 10 .");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_get_lib_version: version_info_len is less than 10 .");
         return FALSE;
     }
 
@@ -794,12 +794,12 @@ int get_lib_version(char* msg_buf, unsigned long msg_buf_len, char *version_info
     return TRUE;
 }
 
-int connect(char* msg_buf, unsigned long msg_buf_len, char* lib_path, unsigned long lib_path_len)
+int P11HSM_connect(char* msg_buf, unsigned long msg_buf_len, char* lib_path, unsigned long lib_path_len)
 {
 
     if (!lib_path || lib_path_len <= 0)
     {
-        snprintf(msg_buf, msg_buf_len, "connect: parameter lib_path must contain a value.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_connect: parameter lib_path must contain a value.");
         return FALSE;
     }
 
@@ -809,36 +809,36 @@ int connect(char* msg_buf, unsigned long msg_buf_len, char* lib_path, unsigned l
     memset(lib_path_null, 0x00, sizeof(lib_path_null));
     strncpy(lib_path_null, lib_path, lib_path_len);
 
-    // connect to the target PKCS-11 client shared library
+    // P11HSM_connect to the target PKCS-11 client shared library
     if( __open_P11_library(lib_path_null) == CK_FALSE )
     {
-        snprintf(msg_buf, msg_buf_len, "connect: failed to load shared library %s", lib_path_null);
+        snprintf(msg_buf, msg_buf_len, "P11HSM_connect: failed to load shared library %s", lib_path_null);
         return FALSE;
     }
 
     return TRUE;
 }
 
-int disconnect(char* msg_buf, unsigned long msg_buf_len)
+int P11HSM_disconnect(char* msg_buf, unsigned long msg_buf_len)
 {
-    // connect to the target PKCS-11 client shared library
+    // P11HSM_connect to the target PKCS-11 client shared library
     if( __close_p11_library() == CK_FALSE )
     {
-        snprintf(msg_buf, msg_buf_len, "disconnect: an error occurred while trying to close PKCS-11 client shared library");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_disconnect: an error occurred while trying to close PKCS-11 client shared library");
         return FALSE;
     }
 
     return TRUE;
 }
 
-int initialize(char* msg_buf, unsigned long msg_buf_len)
+int P11HSM_initialize(char* msg_buf, unsigned long msg_buf_len)
 {
     CK_RV rv = CKR_OK;
 
     rv = _p11->C_Initialize(NULL_PTR);
     if (rv != CKR_OK)
     {
-        snprintf(msg_buf, msg_buf_len, "initialize: PKCS#11 C_Initialize() reports an error %lu.", rv);
+        snprintf(msg_buf, msg_buf_len, "P11HSM_initialize: PKCS#11 C_Initialize() reports an error %lu.", rv);
         __append_return_code(rv, msg_buf, msg_buf_len);
         return FALSE;
     }
@@ -846,7 +846,7 @@ int initialize(char* msg_buf, unsigned long msg_buf_len)
     return TRUE;
 }
 
-int finalize(char* msg_buf, unsigned long msg_buf_len)
+int P11HSM_finalize(char* msg_buf, unsigned long msg_buf_len)
 {
     CK_RV rv = CKR_OK;
 
@@ -854,14 +854,14 @@ int finalize(char* msg_buf, unsigned long msg_buf_len)
     rv = _p11->C_Finalize(NULL_PTR);
     if (rv == CKR_CRYPTOKI_NOT_INITIALIZED)
     {
-        snprintf(msg_buf, msg_buf_len, "finalize: PKCS#11 C_Finalize() reports PKCS#11 library 'not initialized'.  Call connect() first.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_finalize: PKCS#11 C_Finalize() reports PKCS#11 library 'not initialized'.  Call P11HSM_connect() first.");
         __append_return_code(rv, msg_buf, msg_buf_len);
         return FALSE;
     }
 
     if (rv != CKR_OK)
     {
-        snprintf(msg_buf, msg_buf_len, "finalize: PKCS#11 C_Finalize failed with return code %lu.", rv);
+        snprintf(msg_buf, msg_buf_len, "P11HSM_finalize: PKCS#11 C_Finalize failed with return code %lu.", rv);
         __append_return_code(rv, msg_buf, msg_buf_len);
         return FALSE;
     }
@@ -869,12 +869,12 @@ int finalize(char* msg_buf, unsigned long msg_buf_len)
     return TRUE;
 }
 
-int open_session(char* msg_buf, unsigned long msg_buf_len, unsigned long slot, unsigned long flags, unsigned long* h_session)
+int P11HSM_open_session(char* msg_buf, unsigned long msg_buf_len, unsigned long slot, unsigned long flags, unsigned long* h_session)
 {
 
     if (slot < 0)
     {
-        snprintf(msg_buf, msg_buf_len, "open_session: invalid slot number.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_open_session: invalid slot number.");
         return FALSE;
     }
 
@@ -884,7 +884,7 @@ int open_session(char* msg_buf, unsigned long msg_buf_len, unsigned long slot, u
     CK_RV rv = _p11->C_OpenSession(slot, flags, NULL, NULL, &handle);
     if (rv != CKR_OK)
     {
-        snprintf(msg_buf, msg_buf_len, "open_session: PKCS#11 C_OpenSession on slot %lu failed with return value %lu.", slot, rv);
+        snprintf(msg_buf, msg_buf_len, "P11HSM_open_session: PKCS#11 C_OpenSession on slot %lu failed with return value %lu.", slot, rv);
         __append_return_code(rv, msg_buf, msg_buf_len);
         return FALSE;
     }
@@ -895,12 +895,12 @@ int open_session(char* msg_buf, unsigned long msg_buf_len, unsigned long slot, u
     return TRUE;
 }
 
-int close_session(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session)
+int P11HSM_close_session(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session)
 {
     CK_RV rv = _p11->C_CloseSession(h_session);
     if (rv != CKR_OK)
     {
-        snprintf(msg_buf, msg_buf_len, "close_session: PKCS#11 C_CloseSession failed with return value %lu.", rv);
+        snprintf(msg_buf, msg_buf_len, "P11HSM_close_session: PKCS#11 C_CloseSession failed with return value %lu.", rv);
         __append_return_code(rv, msg_buf, msg_buf_len);
         return FALSE;
     }
@@ -908,12 +908,12 @@ int close_session(char* msg_buf, unsigned long msg_buf_len, unsigned long h_sess
    return TRUE;
 }
 
-int close_all_sessions(char* msg_buf, unsigned long msg_buf_len, unsigned long slot_id)
+int P11HSM_close_all_sessions(char* msg_buf, unsigned long msg_buf_len, unsigned long slot_id)
 {
     CK_RV rv = _p11->C_CloseAllSessions(slot_id);
     if (rv != CKR_OK)
     {
-        snprintf(msg_buf, msg_buf_len, "close_all_sessions: PKCS#11 C_CloseAllSessions failed with return value %lu.", rv);
+        snprintf(msg_buf, msg_buf_len, "P11HSM_close_all_sessions: PKCS#11 C_CloseAllSessions failed with return value %lu.", rv);
         __append_return_code(rv, msg_buf, msg_buf_len);
         return FALSE;
     }
@@ -921,14 +921,14 @@ int close_all_sessions(char* msg_buf, unsigned long msg_buf_len, unsigned long s
    return TRUE;
 }
 
-int login(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned long user_type, unsigned char* user_pin, unsigned long user_pin_len)
+int P11HSM_login(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned long user_type, unsigned char* user_pin, unsigned long user_pin_len)
 {
     CK_RV rv = 0;
 
     rv = _p11->C_Login(h_session, user_type, user_pin, user_pin_len);
     if (rv != CKR_OK)
     {
-        snprintf(msg_buf, msg_buf_len, "login: PKCS#11 C_Login failed; return value %lu.", rv);
+        snprintf(msg_buf, msg_buf_len, "P11HSM_login: PKCS#11 C_Login failed; return value %lu.", rv);
         __append_return_code(rv, msg_buf, msg_buf_len);
         return FALSE;
     }
@@ -936,14 +936,14 @@ int login(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, uns
     return TRUE;
 }
 
-int logout(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session)
+int P11HSM_logout(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session)
 {
     CK_RV rv = 0;
 
     rv = _p11->C_Logout(h_session);
     if (rv != CKR_OK)
     {
-        snprintf(msg_buf, msg_buf_len, "logout: PKCS#11 C_Logout failed; return value %lu.", rv);
+        snprintf(msg_buf, msg_buf_len, "P11HSM_logout: PKCS#11 C_Logout failed; return value %lu.", rv);
         __append_return_code(rv, msg_buf, msg_buf_len);
         return FALSE;
     }
@@ -951,11 +951,11 @@ int logout(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session)
     return TRUE;
 }
 
-int set_pin(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned char* old_pin, unsigned long old_pin_len, unsigned char* new_pin, unsigned long new_pin_len)
+int P11HSM_set_pin(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned char* old_pin, unsigned long old_pin_len, unsigned char* new_pin, unsigned long new_pin_len)
 {
     if (!h_session)
     {
-        snprintf(msg_buf, msg_buf_len, "set_pin: h_session variable is null.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_set_pin: h_session variable is null.");
         return FALSE;
     }
 
@@ -964,7 +964,7 @@ int set_pin(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, u
     rv = _p11->C_SetPIN(h_session, old_pin, old_pin_len, new_pin, new_pin_len);
     if (rv != CKR_OK)
     {
-        snprintf(msg_buf, msg_buf_len, "set_pin: PKCS#11 C_SetPIN failed; return value %lu.", rv);
+        snprintf(msg_buf, msg_buf_len, "P11HSM_set_pin: PKCS#11 C_SetPIN failed; return value %lu.", rv);
         __append_return_code(rv, msg_buf, msg_buf_len);
         return FALSE;
     }
@@ -972,24 +972,24 @@ int set_pin(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, u
     return TRUE;
 }
 
-int find_objects(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned long* h_object_array, unsigned long* h_object_array_len)
+int P11HSM_find_objects(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned long* h_object_array, unsigned long* h_object_array_len)
 {
 
     if (!h_session)
     {
-        snprintf(msg_buf, msg_buf_len, "find_objects: h_session variable is null.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_find_objects: h_session variable is null.");
         return FALSE;
     }
 
     if (!h_object_array)
     {
-        snprintf(msg_buf, msg_buf_len, "find_objects: h_object_array variable is null.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_find_objects: h_object_array variable is null.");
         return FALSE;
     }
 
     if (!h_object_array_len)
     {
-        snprintf(msg_buf, msg_buf_len, "find_objects: h_object_array variable is 0.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_find_objects: h_object_array variable is 0.");
         return FALSE;
     }
 
@@ -1005,7 +1005,7 @@ int find_objects(char* msg_buf, unsigned long msg_buf_len, unsigned long h_sessi
         rv = _p11->C_FindObjects(h_session, &h_object, 1, &count);
         if (rv != CKR_OK)
         {
-            snprintf(msg_buf, msg_buf_len, "find_objects: PKCS#11 C_FindObjects for h_session %lu failed with return value %lu.", h_session, rv);
+            snprintf(msg_buf, msg_buf_len, "P11HSM_find_objects: PKCS#11 C_FindObjects for h_session %lu failed with return value %lu.", h_session, rv);
             __append_return_code(rv, msg_buf, msg_buf_len);
             _p11->C_FindObjectsFinal(h_session);
             return FALSE;
@@ -1016,7 +1016,7 @@ int find_objects(char* msg_buf, unsigned long msg_buf_len, unsigned long h_sessi
 
         if (idx+1 > *h_object_array_len)
         {
-            snprintf(msg_buf, msg_buf_len, "find_objects: number of objects found exceed h_object_array length.");
+            snprintf(msg_buf, msg_buf_len, "P11HSM_find_objects: number of objects found exceed h_object_array length.");
             _p11->C_FindObjectsFinal(h_session);
             return FALSE;
         }
@@ -1031,7 +1031,7 @@ int find_objects(char* msg_buf, unsigned long msg_buf_len, unsigned long h_sessi
     rv = _p11->C_FindObjectsFinal(h_session);
     if (rv != CKR_OK)
     {
-        snprintf(msg_buf, msg_buf_len, "find_objects: PKCS#11 C_FindObjectsFinal for h_session %lu failed with return value %lu.", h_session, rv);
+        snprintf(msg_buf, msg_buf_len, "P11HSM_find_objects: PKCS#11 C_FindObjectsFinal for h_session %lu failed with return value %lu.", h_session, rv);
         __append_return_code(rv, msg_buf, msg_buf_len);
         return FALSE;
     }
@@ -1039,24 +1039,24 @@ int find_objects(char* msg_buf, unsigned long msg_buf_len, unsigned long h_sessi
     return TRUE;
 }
 
-int get_object_handle(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned char* object_label, unsigned long object_label_len, unsigned long* h_object)
+int P11HSM_get_object_handle(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned char* object_label, unsigned long object_label_len, unsigned long* h_object)
 {
 
     if (!object_label)
     {
-        snprintf(msg_buf, msg_buf_len, "get_object_handle: label variable is null.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_get_object_handle: label variable is null.");
         return FALSE;
     }
 
     if (!h_session)
     {
-        snprintf(msg_buf, msg_buf_len, "get_object_handle: h_session variable is null.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_get_object_handle: h_session variable is null.");
         return FALSE;
     }
 
     if ((object_label_len > MAX_TOKEN_OBJECT_LABEL_SIZE) || (object_label_len == 0))
     {
-        snprintf(msg_buf, msg_buf_len, "get_object_handle: label variable length is greater than 32 or is 0.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_get_object_handle: label variable length is greater than 32 or is 0.");
         return FALSE;
     }
 
@@ -1072,7 +1072,7 @@ int get_object_handle(char* msg_buf, unsigned long msg_buf_len, unsigned long h_
     rv = _p11->C_FindObjectsInit(h_session, &findTemplate, 1);
     if (rv != CKR_OK)
     {
-        snprintf(msg_buf, msg_buf_len, "get_object_handle: PKCS#11 C_FindObjectsInit for h_session %lu failed.", h_session);
+        snprintf(msg_buf, msg_buf_len, "P11HSM_get_object_handle: PKCS#11 C_FindObjectsInit for h_session %lu failed.", h_session);
         __append_return_code(rv, msg_buf, msg_buf_len);
         return FALSE;
     }
@@ -1080,7 +1080,7 @@ int get_object_handle(char* msg_buf, unsigned long msg_buf_len, unsigned long h_
     rv = _p11->C_FindObjects(h_session, handle, 1, &found_count );
     if (rv != CKR_OK)
     {
-        snprintf(msg_buf, msg_buf_len, "get_object_handle: PKCS#11 C_FindObjects for h_session %lu failed.", h_session);
+        snprintf(msg_buf, msg_buf_len, "P11HSM_get_object_handle: PKCS#11 C_FindObjects for h_session %lu failed.", h_session);
         __append_return_code(rv, msg_buf, msg_buf_len);
         return FALSE;
     }
@@ -1088,7 +1088,7 @@ int get_object_handle(char* msg_buf, unsigned long msg_buf_len, unsigned long h_
     rv = _p11->C_FindObjectsFinal(h_session);
     if (rv != CKR_OK)
     {
-        snprintf(msg_buf, msg_buf_len, "get_object_handle: PKCS#11 C_FindObjectsFinal for h_session %lu failed.", h_session);
+        snprintf(msg_buf, msg_buf_len, "P11HSM_get_object_handle: PKCS#11 C_FindObjectsFinal for h_session %lu failed.", h_session);
         __append_return_code(rv, msg_buf, msg_buf_len);
         return FALSE;
     }
@@ -1099,7 +1099,7 @@ int get_object_handle(char* msg_buf, unsigned long msg_buf_len, unsigned long h_
     return TRUE;
 }
 
-int sign(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned char* data_buf, unsigned long data_buf_len,
+int P11HSM_sign(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned char* data_buf, unsigned long data_buf_len,
           unsigned long h_key, unsigned long mech_type, unsigned long salt_len, unsigned char* sig_buf, unsigned long* sig_buf_len)
 {
     CK_RV rv = 0;
@@ -1108,13 +1108,13 @@ int sign(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsi
 
     if (!sig_buf)
     {
-        snprintf(msg_buf, msg_buf_len, "sign: null value not allowed for parameter sig_buf.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_sign: null value not allowed for parameter sig_buf.");
         return FALSE;
     }
 
     if (!sig_buf_len)
     {
-        snprintf(msg_buf, msg_buf_len, "sign: value must be greater than zero for sig_buf_len.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_sign: value must be greater than zero for sig_buf_len.");
         return FALSE;
     }
 
@@ -1156,11 +1156,11 @@ int sign(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsi
         mech.ulParameterLen = sizeof(pssParams);
     }
 
-    // initialize the HSM signing mechanism
+    // P11HSM_initialize the HSM signing mechanism
     rv = _p11->C_SignInit(h_session, &mech, h_key);
     if (rv != CKR_OK)
     {
-        snprintf(msg_buf, msg_buf_len, "sign: PKCS#11 C_SignInit failed with return code %lu.", rv);
+        snprintf(msg_buf, msg_buf_len, "P11HSM_sign: PKCS#11 C_SignInit failed with return code %lu.", rv);
         __append_return_code(rv, msg_buf, msg_buf_len);
         return FALSE;
     }
@@ -1169,7 +1169,7 @@ int sign(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsi
     rv = _p11->C_Sign(h_session, data_buf, data_buf_len, sig_buf, sig_buf_len);
     if (rv != CKR_OK)
     {
-        snprintf(msg_buf, msg_buf_len, "sign: PKCS#11 C_Sign failed with return code %lu.", rv);
+        snprintf(msg_buf, msg_buf_len, "P11HSM_sign: PKCS#11 C_Sign failed with return code %lu.", rv);
         __append_return_code(rv, msg_buf, msg_buf_len);
         return FALSE;
     }
@@ -1178,7 +1178,7 @@ int sign(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsi
 }
 
 
-int verify(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned char* data_buf, unsigned long data_buf_len, unsigned long h_key,
+int P11HSM_verify(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned char* data_buf, unsigned long data_buf_len, unsigned long h_key,
            unsigned long mech_type, unsigned long salt_len, unsigned char* sig_buf, unsigned long sig_buf_len)
 {
     CK_RV rv = 0;
@@ -1223,20 +1223,20 @@ int verify(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, un
         sigMechanism.ulParameterLen = sizeof(pssParams);
     }
 
-    // initialize the HSM mechanism (verification algorithm to be used)
+    // P11HSM_initialize the HSM mechanism (verification algorithm to be used)
     rv = _p11->C_VerifyInit(h_session, &sigMechanism, h_key);
     if (rv != CKR_OK)
     {
-        snprintf(msg_buf, msg_buf_len, "verify: PKCS#11 C_VerifyInit failed with return code %lu", rv);
+        snprintf(msg_buf, msg_buf_len, "P11HSM_verify: PKCS#11 C_VerifyInit failed with return code %lu", rv);
         __append_return_code(rv, msg_buf, msg_buf_len);
         return FALSE;
     }
 
-    // sign the data using the specific key on the HSM and the initialized signing mechanism
+    // P11HSM_sign the data using the specific key on the HSM and the initialized signing mechanism
     rv = _p11->C_Verify(h_session, data_buf, data_buf_len, sig_buf, sig_buf_len);
     if (rv != CKR_OK)
     {
-        snprintf(msg_buf, msg_buf_len, "verify: PKCS#11 C_Verify failed with return code %lu.", rv);
+        snprintf(msg_buf, msg_buf_len, "P11HSM_verify: PKCS#11 C_Verify failed with return code %lu.", rv);
         __append_return_code(rv, msg_buf, msg_buf_len);
         return FALSE;
     }
@@ -1245,7 +1245,7 @@ int verify(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, un
 }
 
 
-int encrypt(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned char* data_buf, unsigned long data_buf_len,
+int P11HSM_encrypt(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned char* data_buf, unsigned long data_buf_len,
               unsigned long h_key, unsigned long mech_type, unsigned char* iv, unsigned long iv_len,
             unsigned char* encrypted_data_buf, unsigned long* encrypted_data_buf_len)
 {
@@ -1254,42 +1254,42 @@ int encrypt(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, u
     // null pointer check for session handle
     if (!h_session)
     {
-        snprintf(msg_buf, msg_buf_len, "encrypt: h_session invalid value.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_encrypt: h_session invalid value.");
         return FALSE;
     }
 
     // null pointer check for data buffer
     if (!data_buf)
     {
-        snprintf(msg_buf, msg_buf_len, "encrypt: data_buf cannot contain a null pointer.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_encrypt: data_buf cannot contain a null pointer.");
         return FALSE;
     }
 
     // check for valid data buffer length
     if (!data_buf_len)
     {
-        snprintf(msg_buf, msg_buf_len, "encrypt: data_buf_len much contain a value 1 or greater.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_encrypt: data_buf_len much contain a value 1 or greater.");
         return FALSE;
     }
 
     // check for valid key handle
     if (!h_key)
     {
-        snprintf(msg_buf, msg_buf_len, "encrypt: h_key must contain a value.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_encrypt: h_key must contain a value.");
         return FALSE;
     }
 
     // null pointer check for encrypted data buffer
     if (!encrypted_data_buf)
     {
-        snprintf(msg_buf, msg_buf_len, "encrypt: encrypted_data_buffer null pointer unexpected.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_encrypt: encrypted_data_buffer null pointer unexpected.");
         return FALSE;
     }
 
     // check for valid encrypted data buffer length
     if (!encrypted_data_buf_len)
     {
-        snprintf(msg_buf, msg_buf_len, "encrypt: encrypted_data_buffer_len zero value unexpected.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_encrypt: encrypted_data_buffer_len zero value unexpected.");
         return FALSE;
     }
 
@@ -1312,11 +1312,11 @@ int encrypt(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, u
         mech.ulParameterLen = sizeof(oaep);
     }
 
-    // initialize the HSM encryption mechanism
+    // P11HSM_initialize the HSM encryption mechanism
     rv = _p11->C_EncryptInit(h_session, &mech, h_key);
     if (rv != CKR_OK)
     {
-        snprintf(msg_buf, msg_buf_len, "encrypt: PKCS#11 C_EncryptInit failed with return code %lu.", rv);
+        snprintf(msg_buf, msg_buf_len, "P11HSM_encrypt: PKCS#11 C_EncryptInit failed with return code %lu.", rv);
         __append_return_code(rv, msg_buf, msg_buf_len);
         return FALSE;
     }
@@ -1326,7 +1326,7 @@ int encrypt(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, u
 
     if (rv != CKR_OK)
     {
-        snprintf(msg_buf, msg_buf_len, "encrypt: PKCS#11 C_Encrypt failed with return code %lu.", rv);
+        snprintf(msg_buf, msg_buf_len, "P11HSM_encrypt: PKCS#11 C_Encrypt failed with return code %lu.", rv);
         __append_return_code(rv, msg_buf, msg_buf_len);
         return FALSE;
     }
@@ -1334,7 +1334,7 @@ int encrypt(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, u
     return TRUE;
 }
 
-int decrypt(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session,
+int P11HSM_decrypt(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session,
         unsigned char* data_buf, unsigned long data_buf_len, unsigned long h_key,
         unsigned long mech_type, unsigned char* iv, unsigned long iv_len,
         unsigned char* decrypted_data_buf, unsigned long* decrypted_data_buf_len)
@@ -1344,42 +1344,42 @@ int decrypt(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session,
     // null pointer check for session handle
     if (!h_session)
     {
-        snprintf(msg_buf, msg_buf_len, "decrypt: h_session invalid value.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_decrypt: h_session invalid value.");
         return FALSE;
     }
 
     // null pointer check for data buffer
     if (!data_buf)
     {
-        snprintf(msg_buf, msg_buf_len, "decrypt: data_buf null pointer unexpected.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_decrypt: data_buf null pointer unexpected.");
         return FALSE;
     }
 
     // check for valid data length
     if (!data_buf_len)
     {
-        snprintf(msg_buf, msg_buf_len, "decrypt: data_buf_len zero value unexpected.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_decrypt: data_buf_len zero value unexpected.");
         return FALSE;
     }
 
     // check for key handle
     if (!h_key)
     {
-        snprintf(msg_buf, msg_buf_len, "decrypt: h_decrypt_key zero value unexpected.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_decrypt: h_decrypt_key zero value unexpected.");
         return FALSE;
     }
 
     // null pointer check for decrypted data buffer
     if (!decrypted_data_buf)
     {
-        snprintf(msg_buf, msg_buf_len, "decrypt: decrypted_data_buf null pointer unexpected.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_decrypt: decrypted_data_buf null pointer unexpected.");
         return FALSE;
     }
 
     // check for valid encrypted data buffer length
     if (!decrypted_data_buf_len)
     {
-        snprintf(msg_buf, msg_buf_len, "decrypt: decrypted_data_buf_len zero value unexpected.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_decrypt: decrypted_data_buf_len zero value unexpected.");
         return FALSE;
     }
 
@@ -1402,11 +1402,11 @@ int decrypt(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session,
         mech.ulParameterLen = sizeof(oaep);
     }
 
-    // initialize the HSM decryption mechanism
+    // P11HSM_initialize the HSM decryption mechanism
     rv = _p11->C_DecryptInit(h_session, &mech, h_key);
     if (rv != CKR_OK)
     {
-        snprintf(msg_buf, msg_buf_len, "decrypt: PKCS#11 C_DecryptInit failed with return code %lu.", rv);
+        snprintf(msg_buf, msg_buf_len, "P11HSM_decrypt: PKCS#11 C_DecryptInit failed with return code %lu.", rv);
         __append_return_code(rv, msg_buf, msg_buf_len);
         return FALSE;
     }
@@ -1416,7 +1416,7 @@ int decrypt(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session,
 
     if (rv != CKR_OK)
     {
-        snprintf(msg_buf, msg_buf_len, "decrypt: PKCS#11 C_Decrypt failed with return code %lu.", rv);
+        snprintf(msg_buf, msg_buf_len, "P11HSM_decrypt: PKCS#11 C_Decrypt failed with return code %lu.", rv);
         __append_return_code(rv, msg_buf, msg_buf_len);
         return FALSE;
     }
@@ -1424,7 +1424,7 @@ int decrypt(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session,
     return TRUE;
 }
 
-int digest(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned char* data_buf, unsigned long data_buf_len,
+int P11HSM_digest(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned char* data_buf, unsigned long data_buf_len,
         unsigned long mech_type, unsigned char* digest_data_buf, unsigned long* digest_data_buf_len)
 {
     CK_RV rv = 0;
@@ -1432,46 +1432,46 @@ int digest(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, un
     // null pointer check for session handle
     if (!h_session)
     {
-        snprintf(msg_buf, msg_buf_len, "digest: h_session invalid value.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_digest: h_session invalid value.");
         return FALSE;
     }
 
     // null pointer check for data buffer
     if (!data_buf)
     {
-        snprintf(msg_buf, msg_buf_len, "digest: data_buf null pointer unexpected.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_digest: data_buf null pointer unexpected.");
         return FALSE;
     }
 
     // check for valid data buffer length
     if (!data_buf_len)
     {
-        snprintf(msg_buf, msg_buf_len, "digest: data_buf_len zero value unexpected.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_digest: data_buf_len zero value unexpected.");
         return FALSE;
     }
 
-    // null pointer check for digest data buffer
+    // null pointer check for P11HSM_digest data buffer
     if (!digest_data_buf)
     {
-        snprintf(msg_buf, msg_buf_len, "digest: digest_data_buf null pointer unexpected.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_digest: digest_data_buf null pointer unexpected.");
         return FALSE;
     }
 
-    // check for valid digest data buffer length
+    // check for valid P11HSM_digest data buffer length
     if (!digest_data_buf_len)
     {
-        snprintf(msg_buf, msg_buf_len, "digest: digest_data_buf_len zero value unexpected.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_digest: digest_data_buf_len zero value unexpected.");
         return FALSE;
     }
 
     // create the Digestion mechanism
     CK_MECHANISM mech = { mech_type, NULL_PTR, 0 };
 
-    // initialize the HSM digest mechanism
+    // P11HSM_initialize the HSM P11HSM_digest mechanism
     rv = _p11->C_DigestInit(h_session, &mech);
     if (rv != CKR_OK)
     {
-        snprintf(msg_buf, msg_buf_len, "digest: PKCS#11 C_DigestInit failed with return code %lu.", rv);
+        snprintf(msg_buf, msg_buf_len, "P11HSM_digest: PKCS#11 C_DigestInit failed with return code %lu.", rv);
         __append_return_code(rv, msg_buf, msg_buf_len);
         return FALSE;
     }
@@ -1481,7 +1481,7 @@ int digest(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, un
 
     if (rv != CKR_OK)
     {
-        snprintf(msg_buf, msg_buf_len, "Digest: PKCS#11 C_Digest failed with return code %lu.", rv);
+        snprintf(msg_buf, msg_buf_len, "P11HSM_Digest: PKCS#11 C_Digest failed with return code %lu.", rv);
         __append_return_code(rv, msg_buf, msg_buf_len);
         return FALSE;
     }
@@ -1489,11 +1489,11 @@ int digest(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, un
     return TRUE;
 }
 
-int create_rsa_key_pair(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned long key_size,
+int P11HSM_create_rsa_key_pair(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned long key_size,
         unsigned char* pub_key_label, unsigned long pub_key_label_len, unsigned char* pvt_key_label, unsigned long pvt_key_label_len,
         unsigned char* pub_key_id, unsigned long pub_key_id_len, unsigned char* pvt_key_id, unsigned long pvt_key_id_len,
         unsigned long mech_type, unsigned char* pub_exp, unsigned long pub_exp_len, unsigned long token, unsigned long pub_private, unsigned long pvt_private, unsigned long sensitive,
-        unsigned long modifiable, unsigned long extractable, unsigned long sign, unsigned long verify, unsigned long encrypt, unsigned long decrypt,
+        unsigned long modifiable, unsigned long extractable, unsigned long P11HSM_sign, unsigned long P11HSM_verify, unsigned long P11HSM_encrypt, unsigned long P11HSM_decrypt,
         unsigned long wrap, unsigned long unwrap, unsigned long derive, unsigned long overwrite, unsigned long* h_pub_key, unsigned long* h_pvt_key)
 {
     CK_OBJECT_HANDLE h_pub = 0;
@@ -1503,68 +1503,68 @@ int create_rsa_key_pair(char* msg_buf, unsigned long msg_buf_len, unsigned long 
     // null pointer check for session handle
     if (!h_session)
     {
-        snprintf(msg_buf, msg_buf_len, "create_rsa_key_pair: h_session invalid value.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_create_rsa_key_pair: h_session invalid value.");
         return FALSE;
     }
 
     // null pointer check for public exponent value
     if (!pub_exp)
     {
-        snprintf(msg_buf, msg_buf_len, "create_rsa_key_pair: pub_exp null pointer unexpected.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_create_rsa_key_pair: pub_exp null pointer unexpected.");
         return FALSE;
     }
 
     if (pub_exp_len <=0)
     {
-        snprintf(msg_buf, msg_buf_len, "create_rsa_key_pair: pub_exp_len must be greater than 0.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_create_rsa_key_pair: pub_exp_len must be greater than 0.");
         return FALSE;
     }
 
     // null pointer check for public key label
     if (!pub_key_label)
     {
-        snprintf(msg_buf, msg_buf_len, "create_rsa_key_pair: pub_key_label null pointer unexpected.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_create_rsa_key_pair: pub_key_label null pointer unexpected.");
         return FALSE;
     }
 
     // check to make sure the public key label is not too long
     if (pub_key_label_len > MAX_TOKEN_OBJECT_LABEL_SIZE)
     {
-        snprintf(msg_buf, msg_buf_len, "create_rsa_key_pair: pub_key_label parameter too long.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_create_rsa_key_pair: pub_key_label parameter too long.");
         return FALSE;
     }
 
     // check to make sure the public key label is not empty
     if (pub_key_label_len == 0)
     {
-        snprintf(msg_buf, msg_buf_len, "create_rsa_key_pair: pub_key_label parameter is empty.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_create_rsa_key_pair: pub_key_label parameter is empty.");
         return FALSE;
     }
 
     // null pointer check for private key label
     if (!pvt_key_label)
     {
-        snprintf(msg_buf, msg_buf_len, "create_rsa_key_pair: pvt_key_label null pointer unexpected.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_create_rsa_key_pair: pvt_key_label null pointer unexpected.");
         return FALSE;
     }
 
     // check to make sure the private key label is not too long
     if (pvt_key_label_len > MAX_TOKEN_OBJECT_LABEL_SIZE)
     {
-        snprintf(msg_buf, msg_buf_len, "create_rsa_key_pair: pvt_key_label parameter too long.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_create_rsa_key_pair: pvt_key_label parameter too long.");
         return FALSE;
     }
 
     // check to make sure the private key label is not empty
     if (pvt_key_label_len == 0)
     {
-        snprintf(msg_buf, msg_buf_len, "create_rsa_key_pair: pvt_key_label parameter is empty.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_create_rsa_key_pair: pvt_key_label parameter is empty.");
         return FALSE;
     }
 
     // make sure that the public key label does not already exist on the HSM
     // it will return a T/F depending on error conditions
-    rv = get_object_handle(msg_buf, msg_buf_len, h_session, pub_key_label, pub_key_label_len, &h_pub);
+    rv = P11HSM_get_object_handle(msg_buf, msg_buf_len, h_session, pub_key_label, pub_key_label_len, &h_pub);
     if (rv == FALSE)
     {
         return FALSE;
@@ -1579,21 +1579,21 @@ int create_rsa_key_pair(char* msg_buf, unsigned long msg_buf_len, unsigned long 
             rv = _p11->C_DestroyObject(h_session, h_pub);
             if (rv != CKR_OK)
             {
-                snprintf(msg_buf, msg_buf_len, "create_rsa_key_pair: PKCS#11 C_DestroyObject failed.");
+                snprintf(msg_buf, msg_buf_len, "P11HSM_create_rsa_key_pair: PKCS#11 C_DestroyObject failed.");
                    __append_return_code(rv, msg_buf, msg_buf_len);
                 return FALSE;
             }
         }
         else
         {
-            snprintf(msg_buf, msg_buf_len, "create_rsa_key_pair: public key label already exists.");
+            snprintf(msg_buf, msg_buf_len, "P11HSM_create_rsa_key_pair: public key label already exists.");
             return FALSE;
         }
     }
 
     // make sure that the private key label does not already exist on the HSM
     // it will return a T/F depending on error conditions
-    rv = get_object_handle(msg_buf, msg_buf_len, h_session, pvt_key_label, pvt_key_label_len, &h_pvt);
+    rv = P11HSM_get_object_handle(msg_buf, msg_buf_len, h_session, pvt_key_label, pvt_key_label_len, &h_pvt);
     if (rv == FALSE)
     {
         return FALSE;
@@ -1608,14 +1608,14 @@ int create_rsa_key_pair(char* msg_buf, unsigned long msg_buf_len, unsigned long 
             rv = _p11->C_DestroyObject(h_session, h_pvt);
             if (rv != CKR_OK)
             {
-                snprintf(msg_buf, msg_buf_len, "create_rsa_key_pair: PKCS#11 C_DestroyObject failed.");
+                snprintf(msg_buf, msg_buf_len, "P11HSM_create_rsa_key_pair: PKCS#11 C_DestroyObject failed.");
                    __append_return_code(rv, msg_buf, msg_buf_len);
                 return FALSE;
             }
         }
         else
         {
-            snprintf(msg_buf, msg_buf_len, "create_rsa_key_pair: private key label already exists.");
+            snprintf(msg_buf, msg_buf_len, "P11HSM_create_rsa_key_pair: private key label already exists.");
             return FALSE;
         }
     }
@@ -1642,10 +1642,10 @@ int create_rsa_key_pair(char* msg_buf, unsigned long msg_buf_len, unsigned long 
                             sensitive,
                             modifiable,
                             extractable,
-                            sign,
-                            verify,
-                            encrypt,
-                            decrypt,
+                            P11HSM_sign,
+                            P11HSM_verify,
+                            P11HSM_encrypt,
+                            P11HSM_decrypt,
                             wrap,
                             unwrap,
                             derive,
@@ -1654,7 +1654,7 @@ int create_rsa_key_pair(char* msg_buf, unsigned long msg_buf_len, unsigned long 
 
     if (rv != CKR_OK)
     {
-        snprintf(msg_buf, msg_buf_len, "create_rsa_key_pair: __gen_rsa_key_pair failed with the return value %lu.", rv);
+        snprintf(msg_buf, msg_buf_len, "P11HSM_create_rsa_key_pair: __gen_rsa_key_pair failed with the return value %lu.", rv);
            __append_return_code(rv, msg_buf, msg_buf_len);
         return FALSE;
     }
@@ -1666,13 +1666,13 @@ int create_rsa_key_pair(char* msg_buf, unsigned long msg_buf_len, unsigned long 
     return TRUE;
 }
 
-int create_ec_key_pair(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session,
+int P11HSM_create_ec_key_pair(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session,
         unsigned char* ec_params, unsigned long ec_params_len,
         unsigned char* pub_key_label, unsigned long pub_key_label_len, unsigned char* pvt_key_label, unsigned long pvt_key_label_len,
         unsigned char* pub_key_id, unsigned long pub_key_id_len, unsigned char* pvt_key_id, unsigned long pvt_key_id_len,
         unsigned long token, unsigned long pub_private, unsigned long pvt_private, unsigned long sensitive,
-        unsigned long modifiable, unsigned long extractable, unsigned long sign, unsigned long verify,
-        unsigned long encrypt, unsigned long decrypt, unsigned long wrap, unsigned long unwrap, unsigned long derive,
+        unsigned long modifiable, unsigned long extractable, unsigned long P11HSM_sign, unsigned long P11HSM_verify,
+        unsigned long P11HSM_encrypt, unsigned long P11HSM_decrypt, unsigned long wrap, unsigned long unwrap, unsigned long derive,
         unsigned long overwrite, unsigned long* h_pub_key, unsigned long* h_pvt_key)
 {
     CK_OBJECT_HANDLE h_pub = 0;
@@ -1682,69 +1682,69 @@ int create_ec_key_pair(char* msg_buf, unsigned long msg_buf_len, unsigned long h
     // null pointer check for session handle
     if (!h_session)
     {
-        snprintf(msg_buf, msg_buf_len, "create_ec_key_pair: h_session invalid value.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_create_ec_key_pair: h_session invalid value.");
         return FALSE;
     }
 
     // null pointer check for DER encoded ASN.1 ECC curve parameters
     if (!ec_params)
     {
-        snprintf(msg_buf, msg_buf_len, "create_ec_key_pair: ec_params null pointer unexpected.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_create_ec_key_pair: ec_params null pointer unexpected.");
         return FALSE;
     }
 
     // null pointer check for DER encoded ASN.1 ECC curve parameters
     if (!ec_params_len)
     {
-        snprintf(msg_buf, msg_buf_len, "create_ec_key_pair: ec_params_len must be greater than zero.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_create_ec_key_pair: ec_params_len must be greater than zero.");
         return FALSE;
     }
 
     // null pointer check for public key label
     if (!pub_key_label)
     {
-        snprintf(msg_buf, msg_buf_len, "create_ec_key_pair: pub_key_label null pointer unexpected.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_create_ec_key_pair: pub_key_label null pointer unexpected.");
         return FALSE;
     }
 
     // check to make sure the public key label is not too long
     if (pub_key_label_len > MAX_TOKEN_OBJECT_LABEL_SIZE)
     {
-        snprintf(msg_buf, msg_buf_len, "create_ec_key_pair: pub_key_label parameter too long.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_create_ec_key_pair: pub_key_label parameter too long.");
         return FALSE;
     }
 
     // check to make sure the public key label is not empty
     if (pub_key_label_len == 0)
     {
-        snprintf(msg_buf, msg_buf_len, "create_ec_key_pair: pub_key_label parameter is empty.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_create_ec_key_pair: pub_key_label parameter is empty.");
         return FALSE;
     }
 
     // null pointer check for private key label
     if (!pvt_key_label)
     {
-        snprintf(msg_buf, msg_buf_len, "create_ec_key_pair: pvt_key_label null pointer unexpected.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_create_ec_key_pair: pvt_key_label null pointer unexpected.");
         return FALSE;
     }
 
     // check to make sure the private key label is not too long
     if (pvt_key_label_len > MAX_TOKEN_OBJECT_LABEL_SIZE)
     {
-        snprintf(msg_buf, msg_buf_len, "create_ec_key_pair: pvt_key_label parameter too long.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_create_ec_key_pair: pvt_key_label parameter too long.");
         return FALSE;
     }
 
     // check to make sure the private key label is not empty
     if (pvt_key_label_len == 0)
     {
-        snprintf(msg_buf, msg_buf_len, "create_ec_key_pair: pvt_key_label parameter is empty.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_create_ec_key_pair: pvt_key_label parameter is empty.");
         return FALSE;
     }
 
     // make sure that the public key label does not already exist on the HSM
     // it will return a T/F depending on error conditions
-    rv = get_object_handle(msg_buf, msg_buf_len, h_session, pub_key_label, pub_key_label_len, &h_pub);
+    rv = P11HSM_get_object_handle(msg_buf, msg_buf_len, h_session, pub_key_label, pub_key_label_len, &h_pub);
     if (rv == FALSE)
     {
         return FALSE;
@@ -1759,21 +1759,21 @@ int create_ec_key_pair(char* msg_buf, unsigned long msg_buf_len, unsigned long h
             rv = _p11->C_DestroyObject(h_session, h_pub);
             if (rv != CKR_OK)
             {
-                snprintf(msg_buf, msg_buf_len, "create_ec_key_pair: PKCS#11 C_DestroyObject failed.");
+                snprintf(msg_buf, msg_buf_len, "P11HSM_create_ec_key_pair: PKCS#11 C_DestroyObject failed.");
                    __append_return_code(rv, msg_buf, msg_buf_len);
                 return FALSE;
             }
         }
         else
         {
-            snprintf(msg_buf, msg_buf_len, "create_ec_key_pair: public key label already exists.");
+            snprintf(msg_buf, msg_buf_len, "P11HSM_create_ec_key_pair: public key label already exists.");
             return FALSE;
         }
     }
 
     // make sure that the private key label does not already exist on the HSM
     // it will return a T/F depending on error conditions
-    rv = get_object_handle(msg_buf, msg_buf_len, h_session, pvt_key_label, pvt_key_label_len, &h_pvt);
+    rv = P11HSM_get_object_handle(msg_buf, msg_buf_len, h_session, pvt_key_label, pvt_key_label_len, &h_pvt);
     if (rv == FALSE)
     {
         return FALSE;
@@ -1788,14 +1788,14 @@ int create_ec_key_pair(char* msg_buf, unsigned long msg_buf_len, unsigned long h
             rv = _p11->C_DestroyObject(h_session, h_pvt);
             if (rv != CKR_OK)
             {
-                snprintf(msg_buf, msg_buf_len, "create_ec_key_pair: PKCS#11 C_DestroyObject failed for private key label.");
+                snprintf(msg_buf, msg_buf_len, "P11HSM_create_ec_key_pair: PKCS#11 C_DestroyObject failed for private key label.");
                    __append_return_code(rv, msg_buf, msg_buf_len);
                 return FALSE;
             }
         }
         else
         {
-            snprintf(msg_buf, msg_buf_len, "create_ec_key_pair: private key label already exists.");
+            snprintf(msg_buf, msg_buf_len, "P11HSM_create_ec_key_pair: private key label already exists.");
             return FALSE;
         }
     }
@@ -1821,10 +1821,10 @@ int create_ec_key_pair(char* msg_buf, unsigned long msg_buf_len, unsigned long h
                            sensitive,
                            modifiable,
                            extractable,
-                           sign,
-                           verify,
-                           encrypt,
-                           decrypt,
+                           P11HSM_sign,
+                           P11HSM_verify,
+                           P11HSM_encrypt,
+                           P11HSM_decrypt,
                            wrap,
                            unwrap,
                            derive,
@@ -1833,7 +1833,7 @@ int create_ec_key_pair(char* msg_buf, unsigned long msg_buf_len, unsigned long h
 
     if (rv != CKR_OK)
     {
-        snprintf(msg_buf, msg_buf_len, "create_ec_key_pair: __gen_ec_key_pair failed with the return value %lu.", rv);
+        snprintf(msg_buf, msg_buf_len, "P11HSM_create_ec_key_pair: __gen_ec_key_pair failed with the return value %lu.", rv);
            __append_return_code(rv, msg_buf, msg_buf_len);
         return FALSE;
     }
@@ -1846,11 +1846,11 @@ int create_ec_key_pair(char* msg_buf, unsigned long msg_buf_len, unsigned long h
 }
 
 
-int create_secret_key(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session,
+int P11HSM_create_secret_key(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session,
         unsigned char* key_label, unsigned long key_label_len, unsigned char* key_id, unsigned long key_id_len,
         unsigned long mech_type, unsigned long key_size,
         unsigned long token, unsigned long private_, unsigned long sensitive, unsigned long modifiable,
-        unsigned long extractable, unsigned long sign, unsigned long verify, unsigned long encrypt, unsigned long decrypt,
+        unsigned long extractable, unsigned long P11HSM_sign, unsigned long P11HSM_verify, unsigned long P11HSM_encrypt, unsigned long P11HSM_decrypt,
         unsigned long wrap, unsigned long unwrap, unsigned long derive, unsigned long overwrite,
         unsigned long* h_secret_key)
 {
@@ -1860,48 +1860,48 @@ int create_secret_key(char* msg_buf, unsigned long msg_buf_len, unsigned long h_
     // null pointer check for session handle
     if (!h_session)
     {
-        snprintf(msg_buf, msg_buf_len, "create_secret_key: h_session invalid value.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_create_secret_key: h_session invalid value.");
         return FALSE;
     }
 
     // null pointer check for key label
     if (!key_label)
     {
-        snprintf(msg_buf, msg_buf_len, "create_secret_key: key_label null pointer unexpected.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_create_secret_key: key_label null pointer unexpected.");
         return FALSE;
     }
 
     // check to make sure the key label is not too long
     if (key_label_len > MAX_TOKEN_OBJECT_LABEL_SIZE)
     {
-        snprintf(msg_buf, msg_buf_len, "create_secret_key: key_label parameter too long.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_create_secret_key: key_label parameter too long.");
         return FALSE;
     }
 
     // check to make sure the key label is not empty
     if (key_label_len == 0)
     {
-        snprintf(msg_buf, msg_buf_len, "create_secret_key: key_label parameter is empty.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_create_secret_key: key_label parameter is empty.");
         return FALSE;
     }
 
     // key type check
     if (key_size < 0)
     {
-        snprintf(msg_buf, msg_buf_len, "create_secret_key: key_size invalid.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_create_secret_key: key_size invalid.");
         return FALSE;
     }
 
     // key mech type check
     if (mech_type < 0)
     {
-        snprintf(msg_buf, msg_buf_len, "create_secret_key: mech_type invalid.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_create_secret_key: mech_type invalid.");
         return FALSE;
     }
 
     // make sure that the key label does not already exist on the HSM
     // it will return a T/F depending on error conditions
-    rv = get_object_handle(msg_buf, msg_buf_len, h_session, key_label, key_label_len, &h_key);
+    rv = P11HSM_get_object_handle(msg_buf, msg_buf_len, h_session, key_label, key_label_len, &h_key);
     if (rv == FALSE)
     {
         return FALSE;
@@ -1916,14 +1916,14 @@ int create_secret_key(char* msg_buf, unsigned long msg_buf_len, unsigned long h_
             rv = _p11->C_DestroyObject(h_session, h_key);
             if (rv != CKR_OK)
             {
-                snprintf(msg_buf, msg_buf_len, "create_secret_key: PKCS#11 C_DestroyObject failed for secret key label.");
+                snprintf(msg_buf, msg_buf_len, "P11HSM_create_secret_key: PKCS#11 C_DestroyObject failed for secret key label.");
                    __append_return_code(rv, msg_buf, msg_buf_len);
                 return FALSE;
             }
         }
         else
         {
-            snprintf(msg_buf, msg_buf_len, "create_secret_key: secret key label already exists.");
+            snprintf(msg_buf, msg_buf_len, "P11HSM_create_secret_key: secret key label already exists.");
             return FALSE;
         }
     }
@@ -1943,10 +1943,10 @@ int create_secret_key(char* msg_buf, unsigned long msg_buf_len, unsigned long h_
                           sensitive,
                           modifiable,
                           extractable,
-                          sign,
-                          verify,
-                          encrypt,
-                          decrypt,
+                          P11HSM_sign,
+                          P11HSM_verify,
+                          P11HSM_encrypt,
+                          P11HSM_decrypt,
                           wrap,
                           unwrap,
                           derive,
@@ -1954,7 +1954,7 @@ int create_secret_key(char* msg_buf, unsigned long msg_buf_len, unsigned long h_
 
     if (rv != CKR_OK)
     {
-        snprintf(msg_buf, msg_buf_len, "create_secret_key: __gen_secret_key failed with the return value %lu.", rv);
+        snprintf(msg_buf, msg_buf_len, "P11HSM_create_secret_key: __gen_secret_key failed with the return value %lu.", rv);
            __append_return_code(rv, msg_buf, msg_buf_len);
         return FALSE;
     }
@@ -1965,7 +1965,7 @@ int create_secret_key(char* msg_buf, unsigned long msg_buf_len, unsigned long h_
     return TRUE;
 }
 
-int get_slot_count(char* msg_buf, unsigned long msg_buf_len, unsigned long* slot_count)
+int P11HSM_get_slot_count(char* msg_buf, unsigned long msg_buf_len, unsigned long* slot_count)
 {
     CK_ULONG cnt = 0;
     CK_RV rv = 0;
@@ -1976,7 +1976,7 @@ int get_slot_count(char* msg_buf, unsigned long msg_buf_len, unsigned long* slot
     rv = _p11->C_GetSlotList(token_present, slot_list, &cnt);
     if (rv != CKR_OK)
     {
-        snprintf(msg_buf, msg_buf_len, "get_slot_count: Unexpected return value %lu from PKCS#11 C_GetSlotList() while trying to count slots.", rv);
+        snprintf(msg_buf, msg_buf_len, "P11HSM_get_slot_count: Unexpected return value %lu from PKCS#11 C_GetSlotList() while trying to count slots.", rv);
         __append_return_code(rv, msg_buf, msg_buf_len);
         return FALSE;
     }
@@ -1986,7 +1986,7 @@ int get_slot_count(char* msg_buf, unsigned long msg_buf_len, unsigned long* slot
     return TRUE;
 }
 
-int get_token_count(char* msg_buf, unsigned long msg_buf_len, unsigned long* token_count)
+int P11HSM_get_token_count(char* msg_buf, unsigned long msg_buf_len, unsigned long* token_count)
 {
     CK_ULONG cnt = 0;
     CK_RV rv = 0;
@@ -1997,7 +1997,7 @@ int get_token_count(char* msg_buf, unsigned long msg_buf_len, unsigned long* tok
     rv = _p11->C_GetSlotList(token_present, slot_list, &cnt);
     if (rv != CKR_OK)
     {
-        snprintf(msg_buf, msg_buf_len, "get_token_count: Unexpected return value %lu from PKCS#11 C_GetSlotList() while trying to count tokens.", rv);
+        snprintf(msg_buf, msg_buf_len, "P11HSM_get_token_count: Unexpected return value %lu from PKCS#11 C_GetSlotList() while trying to count tokens.", rv);
         __append_return_code(rv, msg_buf, msg_buf_len);
         return FALSE;
     }
@@ -2007,7 +2007,7 @@ int get_token_count(char* msg_buf, unsigned long msg_buf_len, unsigned long* tok
     return TRUE;
 }
 
-int get_slot_info(char* msg_buf, unsigned long msg_buf_len, char* data_buf, unsigned long* data_buf_len, unsigned long* token_count)
+int P11HSM_get_slot_info(char* msg_buf, unsigned long msg_buf_len, char* data_buf, unsigned long* data_buf_len, unsigned long* token_count)
 {
     CK_RV rv = 0;
     CK_ULONG slot_cnt_1 = 0;
@@ -2018,7 +2018,7 @@ int get_slot_info(char* msg_buf, unsigned long msg_buf_len, char* data_buf, unsi
     rv = _p11->C_GetSlotList(TRUE, NULL_PTR, &slot_cnt_1);
     if (rv != CKR_OK)
     {
-        snprintf(msg_buf, msg_buf_len, "get_slot_info: Unexpected return value %lu from PKCS#11 C_GetSlotList() while trying to get slot count.", rv);
+        snprintf(msg_buf, msg_buf_len, "P11HSM_get_slot_info: Unexpected return value %lu from PKCS#11 C_GetSlotList() while trying to get slot count.", rv);
         __append_return_code(rv, msg_buf, msg_buf_len);
         return FALSE;
     }
@@ -2036,7 +2036,7 @@ int get_slot_info(char* msg_buf, unsigned long msg_buf_len, char* data_buf, unsi
     rv = _p11->C_GetSlotList(TRUE, slot_list, &slot_cnt_2);
     if (rv != CKR_OK)
     {
-        snprintf(msg_buf, msg_buf_len, "get_slot_info: Unexpected return value %lu from PKCS#11 C_GetSlotList() while trying to fill slot info data structure.", rv);
+        snprintf(msg_buf, msg_buf_len, "P11HSM_get_slot_info: Unexpected return value %lu from PKCS#11 C_GetSlotList() while trying to fill slot info data structure.", rv);
         __append_return_code(rv, msg_buf, msg_buf_len);
         return FALSE;
     }
@@ -2052,14 +2052,14 @@ int get_slot_info(char* msg_buf, unsigned long msg_buf_len, char* data_buf, unsi
     // determine if the buffer is large enough
     if (MAX_RECORD_SIZE_BYTES * slot_cnt_2 + 1 > *data_buf_len)
     {
-        snprintf(msg_buf, msg_buf_len, "get_slot_info: data_buf_len %lu is too small", *data_buf_len);
+        snprintf(msg_buf, msg_buf_len, "P11HSM_get_slot_info: data_buf_len %lu is too small", *data_buf_len);
         return FALSE;
     }
 
     // return an error if the number of slot exceeds what the library supports
     if (slot_cnt_2 > MAX_SLOT_COUNT)
     {
-        snprintf(msg_buf, msg_buf_len, "get_slot_info: more slots detected than supported by library");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_get_slot_info: more slots detected than supported by library");
         return FALSE;
     }
 
@@ -2071,7 +2071,7 @@ int get_slot_info(char* msg_buf, unsigned long msg_buf_len, char* data_buf, unsi
         rv = _p11->C_GetTokenInfo(slot_list[i], &token_info);
         if (rv != CKR_OK)
         {
-            snprintf(msg_buf, msg_buf_len, "get_slot_info: Unexpected return value %lu from PKCS#11 C_GetTokenInfo() while trying to get token data.", rv);
+            snprintf(msg_buf, msg_buf_len, "P11HSM_get_slot_info: Unexpected return value %lu from PKCS#11 C_GetTokenInfo() while trying to get token data.", rv);
             __append_return_code(rv, msg_buf, msg_buf_len);
             return FALSE;
         }
@@ -2122,7 +2122,7 @@ int get_slot_info(char* msg_buf, unsigned long msg_buf_len, char* data_buf, unsi
     return TRUE;
 }
 
-int get_attribute_value(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned long h_object,
+int P11HSM_get_attribute_value(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned long h_object,
         unsigned long attribute_type, unsigned char *attribute_value, unsigned long* attribute_value_len)
 {
 
@@ -2137,7 +2137,7 @@ int get_attribute_value(char* msg_buf, unsigned long msg_buf_len, unsigned long 
     rv = _p11->C_GetAttributeValue(h_session, h_object, attrib_template, 1);
     if (rv != CKR_OK)
     {
-        snprintf(msg_buf, msg_buf_len, "get_attribute_value: PKCS#11 C_GetAttributeValue() executed with errors; return value %lu.", rv);
+        snprintf(msg_buf, msg_buf_len, "P11HSM_get_attribute_value: PKCS#11 C_GetAttributeValue() executed with errors; return value %lu.", rv);
         __append_return_code(rv, msg_buf, msg_buf_len);
         return FALSE;
     }
@@ -2145,7 +2145,7 @@ int get_attribute_value(char* msg_buf, unsigned long msg_buf_len, unsigned long 
     // test to make sure the buffer passed in is not too small
     if (*attribute_value_len < attrib_template[0].ulValueLen)
     {
-        snprintf(msg_buf, msg_buf_len, "get_attribute_value: attributeValue buffer is too small to return attribute data return value %lu.", rv);
+        snprintf(msg_buf, msg_buf_len, "P11HSM_get_attribute_value: attributeValue buffer is too small to return attribute data return value %lu.", rv);
         __append_return_code(rv, msg_buf, msg_buf_len);
         return FALSE;
     }
@@ -2161,7 +2161,7 @@ int get_attribute_value(char* msg_buf, unsigned long msg_buf_len, unsigned long 
     rv = _p11->C_GetAttributeValue(h_session, h_object, attrib_template, 1);
     if (rv != CKR_OK)
     {
-        snprintf(msg_buf, msg_buf_len, "get_attribute_value: PKCS#11 C_GetAttributeValue() executed with errors when retrieving attribute data; return value %lu.", rv);
+        snprintf(msg_buf, msg_buf_len, "P11HSM_get_attribute_value: PKCS#11 C_GetAttributeValue() executed with errors when retrieving attribute data; return value %lu.", rv);
         __append_return_code(rv, msg_buf, msg_buf_len);
         // free the memory we allocated
         free(p_data);
@@ -2180,7 +2180,7 @@ int get_attribute_value(char* msg_buf, unsigned long msg_buf_len, unsigned long 
     return TRUE;
 }
 
-int set_attribute_value(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned long h_object,
+int P11HSM_set_attribute_value(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned long h_object,
         unsigned long attribute_type, unsigned char *attribute_value, unsigned long attribute_value_len)
 {
 
@@ -2193,7 +2193,7 @@ int set_attribute_value(char* msg_buf, unsigned long msg_buf_len, unsigned long 
     CK_RV rv = _p11->C_SetAttributeValue(h_session, h_object, p_attrib_template, 1);
     if (rv != CKR_OK)
     {
-        snprintf(msg_buf, msg_buf_len, "set_attribute_value: PKCS#11 C_SetAttributeValue() executed with errors; return value %lu.", rv);
+        snprintf(msg_buf, msg_buf_len, "P11HSM_set_attribute_value: PKCS#11 C_SetAttributeValue() executed with errors; return value %lu.", rv);
         __append_return_code(rv, msg_buf, msg_buf_len);
         return FALSE;
     }
@@ -2201,14 +2201,14 @@ int set_attribute_value(char* msg_buf, unsigned long msg_buf_len, unsigned long 
     return TRUE;
 }
 
-int generate_random(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned char* random_data, unsigned long random_data_len)
+int P11HSM_generate_random(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned char* random_data, unsigned long random_data_len)
 {
     CK_RV rv = CKR_OK;
 
     rv = _p11->C_GenerateRandom(h_session, random_data, random_data_len);
     if (rv != CKR_OK)
     {
-        snprintf(msg_buf, msg_buf_len, "generate_random: PKCS#11 C_GenerateRandom() executed with errors; return value %lu.", rv);
+        snprintf(msg_buf, msg_buf_len, "P11HSM_generate_random: PKCS#11 C_GenerateRandom() executed with errors; return value %lu.", rv);
         __append_return_code(rv, msg_buf, msg_buf_len);
         return FALSE;
     }
@@ -2216,14 +2216,14 @@ int generate_random(char* msg_buf, unsigned long msg_buf_len, unsigned long h_se
     return TRUE;
 }
 
-int seed_random(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned char* seed_data, unsigned long seed_data_len)
+int P11HSM_seed_random(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned char* seed_data, unsigned long seed_data_len)
 {
     CK_RV rv = CKR_OK;
 
     rv = _p11->C_SeedRandom(h_session, seed_data, seed_data_len);
     if (rv != CKR_OK)
     {
-        snprintf(msg_buf, msg_buf_len, "seed_random: PKCS#11 C_SeedRandom() executed with errors; return value %lu.", rv);
+        snprintf(msg_buf, msg_buf_len, "P11HSM_seed_random: PKCS#11 C_SeedRandom() executed with errors; return value %lu.", rv);
         __append_return_code(rv, msg_buf, msg_buf_len);
         return FALSE;
     }
@@ -2231,19 +2231,19 @@ int seed_random(char* msg_buf, unsigned long msg_buf_len, unsigned long h_sessio
     return TRUE;
 }
 
-int destroy_object(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned long h_object)
+int P11HSM_destroy_object(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned long h_object)
 {
     // null pointer check for session handle
     if (!h_session)
     {
-        snprintf(msg_buf, msg_buf_len, "destroy_object: h_session invalid value.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_destroy_object: h_session invalid value.");
         return FALSE;
     }
 
     // null pointer check for object handle
     if (!h_object)
     {
-        snprintf(msg_buf, msg_buf_len, "destroy_object: hObject null pointer unexpected.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_destroy_object: hObject null pointer unexpected.");
         return FALSE;
     }
 
@@ -2252,7 +2252,7 @@ int destroy_object(char* msg_buf, unsigned long msg_buf_len, unsigned long h_ses
 
     if (rv != CKR_OK)
     {
-        snprintf(msg_buf, msg_buf_len, "destroy_object: PKCS#11 C_DestroyObject() executed with errors; return value %lu.", rv);
+        snprintf(msg_buf, msg_buf_len, "P11HSM_destroy_object: PKCS#11 C_DestroyObject() executed with errors; return value %lu.", rv);
         __append_return_code(rv, msg_buf, msg_buf_len);
         return FALSE;
     }
@@ -2260,7 +2260,7 @@ int destroy_object(char* msg_buf, unsigned long msg_buf_len, unsigned long h_ses
     return TRUE;
 }
 
-int import_data_object(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session,
+int P11HSM_import_data_object(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session,
         unsigned char* data_label, unsigned long data_label_len, unsigned char* data_id, unsigned long data_id_len,
         unsigned char* value, unsigned long value_len, unsigned long token, unsigned long overwrite, unsigned long* h_object)
 {
@@ -2269,30 +2269,30 @@ int import_data_object(char* msg_buf, unsigned long msg_buf_len, unsigned long h
     // null pointer check for session handle
     if (!h_session)
     {
-        snprintf(msg_buf, msg_buf_len, "import_data_object: h_session invalid value.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_import_data_object: h_session invalid value.");
         return FALSE;
     }
 
     // null pointer check for data label
     if (!data_label)
     {
-        snprintf(msg_buf, msg_buf_len, "import_data_object: data_label null pointer unexpected.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_import_data_object: data_label null pointer unexpected.");
         return FALSE;
     }
 
     // check to make sure the public key label is not too long
     if (data_label_len > MAX_TOKEN_OBJECT_LABEL_SIZE)
     {
-        snprintf(msg_buf, msg_buf_len, "import_data_object: data_label parameter too long.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_import_data_object: data_label parameter too long.");
         return FALSE;
     }
 
     // make sure that the key label does not already exist on the HSM
     CK_OBJECT_HANDLE h_test = 0;
-    rv = get_object_handle(msg_buf, msg_buf_len, h_session, data_label, data_label_len, &h_test);
+    rv = P11HSM_get_object_handle(msg_buf, msg_buf_len, h_session, data_label, data_label_len, &h_test);
     if (rv == FALSE)
     {
-        snprintf(msg_buf, msg_buf_len, "import_data_object: get_object_handle() failed.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_import_data_object: P11HSM_get_object_handle() failed.");
         return FALSE;
     }
 
@@ -2304,14 +2304,14 @@ int import_data_object(char* msg_buf, unsigned long msg_buf_len, unsigned long h
             rv = _p11->C_DestroyObject(h_session, h_test);
             if (rv != CKR_OK)
             {
-                snprintf(msg_buf, msg_buf_len, "import_data_object: PKCS#11 C_DestroyObject failed for object label '%s' with the return value %lu.", data_label, rv);
+                snprintf(msg_buf, msg_buf_len, "P11HSM_import_data_object: PKCS#11 C_DestroyObject failed for object label '%s' with the return value %lu.", data_label, rv);
                    __append_return_code(rv, msg_buf, msg_buf_len);
                 return FALSE;
             }
         }
         else
         {
-            snprintf(msg_buf, msg_buf_len, "import_data_object: object label '%s' already exists.", data_label);
+            snprintf(msg_buf, msg_buf_len, "P11HSM_import_data_object: object label '%s' already exists.", data_label);
             return FALSE;
         }
     }
@@ -2332,7 +2332,7 @@ int import_data_object(char* msg_buf, unsigned long msg_buf_len, unsigned long h
 
     if (rv != CKR_OK)
     {
-        snprintf(msg_buf, msg_buf_len, "import_data_object: PKCS#11 C_CreateObject() executed with errors; return value %lu.", rv);
+        snprintf(msg_buf, msg_buf_len, "P11HSM_import_data_object: PKCS#11 C_CreateObject() executed with errors; return value %lu.", rv);
         __append_return_code(rv, msg_buf, msg_buf_len);
         return FALSE;
     }
@@ -2342,54 +2342,54 @@ int import_data_object(char* msg_buf, unsigned long msg_buf_len, unsigned long h
     return TRUE;
 }
 
-int import_rsa_public_key(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session,
+int P11HSM_import_rsa_public_key(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session,
         unsigned char* key_label, unsigned long key_label_len, unsigned char* key_id, unsigned long key_id_len,
         unsigned char* exp, unsigned long exp_len, unsigned char* mod, unsigned long mod_len,
-        unsigned long token, unsigned long _private, unsigned long modifiable, unsigned long verify, unsigned long encrypt, unsigned long wrap, unsigned long overwrite, unsigned long* h_pub_key)
+        unsigned long token, unsigned long _private, unsigned long modifiable, unsigned long P11HSM_verify, unsigned long P11HSM_encrypt, unsigned long wrap, unsigned long overwrite, unsigned long* h_pub_key)
 {
     CK_RV rv = 0;
 
     // null pointer check for session handle
     if (!h_session)
     {
-        snprintf(msg_buf, msg_buf_len, "import_rsa_public_key: h_session invalid value.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_import_rsa_public_key: h_session invalid value.");
         return FALSE;
     }
 
     // null pointer check for key label
     if (!key_label)
     {
-        snprintf(msg_buf, msg_buf_len, "import_rsa_public_key: key_label null pointer unexpected.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_import_rsa_public_key: key_label null pointer unexpected.");
         return FALSE;
     }
 
     // check to make sure the public key label is not too long
     if (key_label_len > MAX_TOKEN_OBJECT_LABEL_SIZE)
     {
-        snprintf(msg_buf, msg_buf_len, "import_rsa_public_key: key_label parameter too long.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_import_rsa_public_key: key_label parameter too long.");
         return FALSE;
     }
 
     // null pointer check for public exponent
     if (!exp)
     {
-        snprintf(msg_buf, msg_buf_len, "import_rsa_public_key: exp null pointer unexpected.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_import_rsa_public_key: exp null pointer unexpected.");
         return FALSE;
     }
 
     // null pointer check for public modulus
     if (!mod)
     {
-        snprintf(msg_buf, msg_buf_len, "import_rsa_public_key: mod null pointer unexpected.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_import_rsa_public_key: mod null pointer unexpected.");
         return FALSE;
     }
 
     // make sure that the key label does not already exist on the HSM
     CK_OBJECT_HANDLE h_test = 0;
-    rv = get_object_handle(msg_buf, msg_buf_len, h_session, key_label, key_label_len, &h_test);
+    rv = P11HSM_get_object_handle(msg_buf, msg_buf_len, h_session, key_label, key_label_len, &h_test);
     if (rv == FALSE)
     {
-        snprintf(msg_buf, msg_buf_len, "import_rsa_public_key: get_object_handle() failed.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_import_rsa_public_key: P11HSM_get_object_handle() failed.");
         return FALSE;
     }
 
@@ -2401,14 +2401,14 @@ int import_rsa_public_key(char* msg_buf, unsigned long msg_buf_len, unsigned lon
             rv = _p11->C_DestroyObject(h_session, h_test);
             if (rv != CKR_OK)
             {
-                snprintf(msg_buf, msg_buf_len, "import_rsa_public_key: PKCS#11 C_DestroyObject failed for object label '%s' with the return value %lu.", key_label, rv);
+                snprintf(msg_buf, msg_buf_len, "P11HSM_import_rsa_public_key: PKCS#11 C_DestroyObject failed for object label '%s' with the return value %lu.", key_label, rv);
                    __append_return_code(rv, msg_buf, msg_buf_len);
                 return FALSE;
             }
         }
         else
         {
-            snprintf(msg_buf, msg_buf_len, "import_rsa_public_key: object label '%s' already exists.", key_label);
+            snprintf(msg_buf, msg_buf_len, "P11HSM_import_rsa_public_key: object label '%s' already exists.", key_label);
             return FALSE;
         }
     }
@@ -2418,8 +2418,8 @@ int import_rsa_public_key(char* msg_buf, unsigned long msg_buf_len, unsigned lon
     CK_BBOOL b_token = token;
     CK_BBOOL b_private = _private;
     CK_BBOOL b_modifiable = modifiable;
-    CK_BBOOL b_encrypt = encrypt;
-    CK_BBOOL b_verify = verify;
+    CK_BBOOL b_encrypt = P11HSM_encrypt;
+    CK_BBOOL b_verify = P11HSM_verify;
     CK_BBOOL b_wrap = wrap;
 
     CK_ATTRIBUTE pub_template[] = {
@@ -2445,7 +2445,7 @@ int import_rsa_public_key(char* msg_buf, unsigned long msg_buf_len, unsigned lon
 
     if (rv != CKR_OK)
     {
-        snprintf(msg_buf, msg_buf_len, "import_rsa_public_key: PKCS#11 C_CreateObject() executed with errors; return value %lu.", rv);
+        snprintf(msg_buf, msg_buf_len, "P11HSM_import_rsa_public_key: PKCS#11 C_CreateObject() executed with errors; return value %lu.", rv);
         __append_return_code(rv, msg_buf, msg_buf_len);
         return FALSE;
     }
@@ -2455,54 +2455,54 @@ int import_rsa_public_key(char* msg_buf, unsigned long msg_buf_len, unsigned lon
     return TRUE;
 }
 
-int import_ec_public_key(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session,
+int P11HSM_import_ec_public_key(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session,
         unsigned char* key_label, unsigned long key_label_len, unsigned char* key_id, unsigned long key_id_len,
         unsigned char* ec_params, unsigned long ec_params_len, unsigned char* ec_point, unsigned long ec_point_len,
-        unsigned long token, unsigned long _private, unsigned long modifiable, unsigned long verify, unsigned long encrypt, unsigned long wrap, unsigned long overwrite, unsigned long* h_pub_key)
+        unsigned long token, unsigned long _private, unsigned long modifiable, unsigned long P11HSM_verify, unsigned long P11HSM_encrypt, unsigned long wrap, unsigned long overwrite, unsigned long* h_pub_key)
 {
     CK_RV rv = 0;
 
     // null pointer check for session handle
     if (!h_session)
     {
-        snprintf(msg_buf, msg_buf_len, "import_ec_public_key: h_session invalid value.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_import_ec_public_key: h_session invalid value.");
         return FALSE;
     }
 
     // null pointer check for key label
     if (!key_label)
     {
-        snprintf(msg_buf, msg_buf_len, "import_ec_public_key: key_label null pointer unexpected.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_import_ec_public_key: key_label null pointer unexpected.");
         return FALSE;
     }
 
     // check to make sure the public key label is not too long
     if (key_label_len > MAX_TOKEN_OBJECT_LABEL_SIZE)
     {
-        snprintf(msg_buf, msg_buf_len, "import_ec_public_key: key_label parameter too long.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_import_ec_public_key: key_label parameter too long.");
         return FALSE;
     }
 
     // null pointer check for EC curve parameters
     if (!ec_params)
     {
-        snprintf(msg_buf, msg_buf_len, "import_ec_public_key: ec_params null pointer unexpected.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_import_ec_public_key: ec_params null pointer unexpected.");
         return FALSE;
     }
 
     // null pointer check for EC point
     if (!ec_point)
     {
-        snprintf(msg_buf, msg_buf_len, "import_ec_public_key: ec_point null pointer unexpected.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_import_ec_public_key: ec_point null pointer unexpected.");
         return FALSE;
     }
 
     // make sure that the key label does not already exist on the HSM
     CK_OBJECT_HANDLE h_test = 0;
-    rv = get_object_handle(msg_buf, msg_buf_len, h_session, key_label, key_label_len, &h_test);
+    rv = P11HSM_get_object_handle(msg_buf, msg_buf_len, h_session, key_label, key_label_len, &h_test);
     if (rv == FALSE)
     {
-        snprintf(msg_buf, msg_buf_len, "import_ec_public_key: get_object_handle() failed.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_import_ec_public_key: P11HSM_get_object_handle() failed.");
         return FALSE;
     }
 
@@ -2514,14 +2514,14 @@ int import_ec_public_key(char* msg_buf, unsigned long msg_buf_len, unsigned long
             rv = _p11->C_DestroyObject(h_session, h_test);
             if (rv != CKR_OK)
             {
-                snprintf(msg_buf, msg_buf_len, "import_ec_public_key: PKCS#11 C_DestroyObject failed for object label '%s' with the return value %lu.", key_label, rv);
+                snprintf(msg_buf, msg_buf_len, "P11HSM_import_ec_public_key: PKCS#11 C_DestroyObject failed for object label '%s' with the return value %lu.", key_label, rv);
                    __append_return_code(rv, msg_buf, msg_buf_len);
                 return FALSE;
             }
         }
         else
         {
-            snprintf(msg_buf, msg_buf_len, "import_ec_public_key: object label '%s' already exists.", key_label);
+            snprintf(msg_buf, msg_buf_len, "P11HSM_import_ec_public_key: object label '%s' already exists.", key_label);
             return FALSE;
         }
     }
@@ -2531,8 +2531,8 @@ int import_ec_public_key(char* msg_buf, unsigned long msg_buf_len, unsigned long
     CK_BBOOL b_token = token;
     CK_BBOOL b_private = _private;
     CK_BBOOL b_modifiable = modifiable;
-    CK_BBOOL b_encrypt = encrypt;
-    CK_BBOOL b_verify = verify;
+    CK_BBOOL b_encrypt = P11HSM_encrypt;
+    CK_BBOOL b_verify = P11HSM_verify;
     CK_BBOOL b_wrap = wrap;
 
     CK_ATTRIBUTE pub_template[] = {
@@ -2558,7 +2558,7 @@ int import_ec_public_key(char* msg_buf, unsigned long msg_buf_len, unsigned long
 
     if (rv != CKR_OK)
     {
-        snprintf(msg_buf, msg_buf_len, "import_ec_public_key: PKCS#11 C_CreateObject() executed with errors; return value %lu.", rv);
+        snprintf(msg_buf, msg_buf_len, "P11HSM_import_ec_public_key: PKCS#11 C_CreateObject() executed with errors; return value %lu.", rv);
         __append_return_code(rv, msg_buf, msg_buf_len);
         return FALSE;
     }
@@ -2568,7 +2568,7 @@ int import_ec_public_key(char* msg_buf, unsigned long msg_buf_len, unsigned long
     return TRUE;
 }
 
-int import_public_cert(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session,
+int P11HSM_import_public_cert(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session,
         unsigned char* cert_label, unsigned long cert_label_len, unsigned char* cert_id, unsigned long cert_id_len,
         unsigned char* cert_serial, unsigned long cert_serial_len, unsigned char* cert_subject, unsigned long cert_subject_len,
         unsigned char* cert_issuer, unsigned long cert_issuer_len, unsigned char* cert_value, unsigned long cert_value_len,
@@ -2581,37 +2581,37 @@ int import_public_cert(char* msg_buf, unsigned long msg_buf_len, unsigned long h
     // null pointer check for session handle
     if (!h_session)
     {
-        snprintf(msg_buf, msg_buf_len, "import_public_cert: h_session invalid value.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_import_public_cert: h_session invalid value.");
         return FALSE;
     }
 
     // null pointer check for cert label
     if (!cert_label)
     {
-        snprintf(msg_buf, msg_buf_len, "import_public_cert: cert_label null pointer unexpected.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_import_public_cert: cert_label null pointer unexpected.");
         return FALSE;
     }
 
     // check to make sure the cert label is not too long
     if (cert_label_len > MAX_TOKEN_OBJECT_LABEL_SIZE)
     {
-        snprintf(msg_buf, msg_buf_len, "import_public_cert: cert_label parameter too long.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_import_public_cert: cert_label parameter too long.");
         return FALSE;
     }
 
     // null pointer check for cert data value
     if (!cert_value)
     {
-        snprintf(msg_buf, msg_buf_len, "import_public_cert: cert_value null pointer unexpected.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_import_public_cert: cert_value null pointer unexpected.");
         return FALSE;
     }
 
     // make sure that the key label does not already exist on the HSM
     CK_OBJECT_HANDLE h_test = 0;
-    rv = get_object_handle(msg_buf, msg_buf_len, h_session, cert_label, cert_label_len, &h_test);
+    rv = P11HSM_get_object_handle(msg_buf, msg_buf_len, h_session, cert_label, cert_label_len, &h_test);
     if (rv == FALSE)
     {
-        snprintf(msg_buf, msg_buf_len, "import_public_cert: get_object_handle() failed.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_import_public_cert: P11HSM_get_object_handle() failed.");
         return FALSE;
     }
 
@@ -2623,14 +2623,14 @@ int import_public_cert(char* msg_buf, unsigned long msg_buf_len, unsigned long h
             rv = _p11->C_DestroyObject(h_session, h_test);
             if (rv != CKR_OK)
             {
-                snprintf(msg_buf, msg_buf_len, "import_public_cert: PKCS#11 C_DestroyObject failed for object label '%s' with the return value %lu.", cert_label, rv);
+                snprintf(msg_buf, msg_buf_len, "P11HSM_import_public_cert: PKCS#11 C_DestroyObject failed for object label '%s' with the return value %lu.", cert_label, rv);
                 __append_return_code(rv, msg_buf, msg_buf_len);
                 return FALSE;
             }
         }
         else
         {
-            snprintf(msg_buf, msg_buf_len, "import_public_cert: object label '%s' already exists.", cert_label);
+            snprintf(msg_buf, msg_buf_len, "P11HSM_import_public_cert: object label '%s' already exists.", cert_label);
             return FALSE;
         }
     }
@@ -2664,7 +2664,7 @@ int import_public_cert(char* msg_buf, unsigned long msg_buf_len, unsigned long h
 
     if (rv != CKR_OK)
     {
-        snprintf(msg_buf, msg_buf_len, "import_public_cert: PKCS#11 C_CreateObject() executed with errors; return value %lu.", rv);
+        snprintf(msg_buf, msg_buf_len, "P11HSM_import_public_cert: PKCS#11 C_CreateObject() executed with errors; return value %lu.", rv);
         __append_return_code(rv, msg_buf, msg_buf_len);
         return FALSE;
     }
@@ -2675,49 +2675,49 @@ int import_public_cert(char* msg_buf, unsigned long msg_buf_len, unsigned long h
 
 }
 
-int wrap_key(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned long h_key,
+int P11HSM_wrap_key(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned long h_key,
              unsigned long h_wrap_key, unsigned char* iv, unsigned long iv_len, unsigned long mech_type,
              unsigned char *key_buf, unsigned long* key_buf_len)
 {
     // value check
     if (h_session <= 0)
     {
-        snprintf(msg_buf, msg_buf_len, "wrap_key: h_session value must be greater than zero.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_wrap_key: h_session value must be greater than zero.");
         return FALSE;
     }
 
     // value check
     if (h_key <= 0)
     {
-        snprintf(msg_buf, msg_buf_len, "wrap_key: h_key value must be greater than zero..");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_wrap_key: h_key value must be greater than zero..");
         return FALSE;
     }
 
     // value check
     if (h_wrap_key <=0)
     {
-        snprintf(msg_buf, msg_buf_len, "wrap_key: h_wrap_key value must be greater than zero.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_wrap_key: h_wrap_key value must be greater than zero.");
         return FALSE;
     }
 
     // value check
     if (mech_type <=0)
     {
-        snprintf(msg_buf, msg_buf_len, "wrap_key: mech_type value must be greater than zero.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_wrap_key: mech_type value must be greater than zero.");
         return FALSE;
     }
 
     // value check
     if (!key_buf)
     {
-        snprintf(msg_buf, msg_buf_len, "wrap_key: key_buf cannot be null.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_wrap_key: key_buf cannot be null.");
         return FALSE;
     }
 
     // value check
     if (*key_buf_len <=0)
     {
-        snprintf(msg_buf, msg_buf_len, "wrap_key: key_buf_len value must be greater than zero.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_wrap_key: key_buf_len value must be greater than zero.");
         return FALSE;
     }
 
@@ -2727,7 +2727,7 @@ int wrap_key(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, 
     // evaluate return code
     if (rv != CKR_OK)
     {
-        snprintf(msg_buf, msg_buf_len, "wrap_key: __wrap_key() failed to wrap target key; return value %lu", rv);
+        snprintf(msg_buf, msg_buf_len, "P11HSM_wrap_key: __wrap_key() failed to wrap target key; return value %lu", rv);
         __append_return_code(rv, msg_buf, msg_buf_len);
         return FALSE;
     }
@@ -2736,12 +2736,12 @@ int wrap_key(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, 
     return TRUE;
 }
 
-int unwrap_private_key(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session,
+int P11HSM_unwrap_private_key(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session,
         unsigned long h_wrap_key, unsigned char* iv, unsigned long iv_len, unsigned long mech_type,
         unsigned char* key_label, unsigned long key_label_len, unsigned char* key_id, unsigned long key_id_len,
         unsigned char* key_buf, unsigned long key_buf_len, unsigned long key_type,
         unsigned long token, unsigned long private_, unsigned long sensitive, unsigned long modifiable, unsigned long extractable,
-        unsigned long sign, unsigned long decrypt, unsigned long unwrap, unsigned long derive, unsigned long overwrite,
+        unsigned long P11HSM_sign, unsigned long P11HSM_decrypt, unsigned long unwrap, unsigned long derive, unsigned long overwrite,
         unsigned long* h_pvt_key)
 {
     CK_RV rv;
@@ -2749,58 +2749,58 @@ int unwrap_private_key(char* msg_buf, unsigned long msg_buf_len, unsigned long h
     // null pointer check for private key info buffer length
     if (!h_session)
     {
-        snprintf(msg_buf, msg_buf_len, "unwrap_private_key: h_session invalid value.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_unwrap_private_key: h_session invalid value.");
         return FALSE;
     }
 
     // null pointer check for public key label
     if (!key_label)
     {
-        snprintf(msg_buf, msg_buf_len, "unwrap_private_key: key_label null pointer unexpected.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_unwrap_private_key: key_label null pointer unexpected.");
         return FALSE;
     }
 
     // check wrapping key handle
     if (h_wrap_key < 0)
     {
-        snprintf(msg_buf, msg_buf_len, "unwrap_private_key: h_wrap_key invalid value.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_unwrap_private_key: h_wrap_key invalid value.");
         return FALSE;
     }
 
     // check key buffer
     if (!key_buf)
     {
-        snprintf(msg_buf, msg_buf_len, "unwrap_private_key: key_buf invalid value.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_unwrap_private_key: key_buf invalid value.");
         return FALSE;
     }
 
     // check key buffer length
     if (key_buf_len <= 0)
     {
-        snprintf(msg_buf, msg_buf_len, "unwrap_private_key: key_buf_len invalid value.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_unwrap_private_key: key_buf_len invalid value.");
         return FALSE;
     }
 
     // check to make sure the public key label is not too long
     if (key_label_len > MAX_TOKEN_OBJECT_LABEL_SIZE)
     {
-        snprintf(msg_buf, msg_buf_len, "unwrap_private_key: key_label parameter too long.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_unwrap_private_key: key_label parameter too long.");
         return FALSE;
     }
 
     // key type check
     if (key_type < 0)
     {
-        snprintf(msg_buf, msg_buf_len, "unwrap_private_key: key_type invalid.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_unwrap_private_key: key_type invalid.");
         return FALSE;
     }
 
     // make sure that the key label does not already exist on the HSM
     CK_OBJECT_HANDLE h_test = 0;
-    rv = get_object_handle(msg_buf, msg_buf_len, h_session, key_label, key_label_len, &h_test);
+    rv = P11HSM_get_object_handle(msg_buf, msg_buf_len, h_session, key_label, key_label_len, &h_test);
     if (rv == FALSE)
     {
-        snprintf(msg_buf, msg_buf_len, "unwrap_private_key: get_object_handle failed.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_unwrap_private_key: P11HSM_get_object_handle failed.");
         return FALSE;
     }
 
@@ -2812,14 +2812,14 @@ int unwrap_private_key(char* msg_buf, unsigned long msg_buf_len, unsigned long h
             rv = _p11->C_DestroyObject(h_session, h_test);
             if (rv != CKR_OK)
             {
-                snprintf(msg_buf, msg_buf_len, "unwrap_private_key: PKCS#11 C_DestroyObject failed for private key label '%s' with the return value %lu.", key_label, rv);
+                snprintf(msg_buf, msg_buf_len, "P11HSM_unwrap_private_key: PKCS#11 C_DestroyObject failed for private key label '%s' with the return value %lu.", key_label, rv);
                 __append_return_code(rv, msg_buf, msg_buf_len);
                 return FALSE;
             }
         }
         else
         {
-            snprintf(msg_buf, msg_buf_len, "unwrap_private_key: private key label '%s' already exists.", key_label);
+            snprintf(msg_buf, msg_buf_len, "P11HSM_unwrap_private_key: private key label '%s' already exists.", key_label);
             return FALSE;
         }
     }
@@ -2843,8 +2843,8 @@ int unwrap_private_key(char* msg_buf, unsigned long msg_buf_len, unsigned long h
                               sensitive,
                               modifiable,
                               extractable,
-                              sign,
-                              decrypt,
+                              P11HSM_sign,
+                              P11HSM_decrypt,
                               unwrap,
                               derive,
                               &h_new_key);
@@ -2852,7 +2852,7 @@ int unwrap_private_key(char* msg_buf, unsigned long msg_buf_len, unsigned long h
     // evaluate return code
     if (rv != CKR_OK)
     {
-        snprintf(msg_buf, msg_buf_len, "unwrap_private_key: __unwrap_private_key() failed; return value %lu", rv);
+        snprintf(msg_buf, msg_buf_len, "P11HSM_unwrap_private_key: __unwrap_private_key() failed; return value %lu", rv);
         __append_return_code(rv, msg_buf, msg_buf_len);
         return FALSE;
     }
@@ -2862,13 +2862,13 @@ int unwrap_private_key(char* msg_buf, unsigned long msg_buf_len, unsigned long h
     return TRUE;
 }
 
-int unwrap_secret_key(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session,
+int P11HSM_unwrap_secret_key(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session,
         unsigned long h_wrap_key, unsigned char* iv, unsigned long iv_len, unsigned long mech_type,
         unsigned char* key_label, unsigned long key_label_len, unsigned char* key_id, unsigned long key_id_len,
         unsigned char* key_buf, unsigned long key_buf_len,
         unsigned long key_type, unsigned long key_size,    unsigned long token, unsigned long private_,
-        unsigned long sensitive, unsigned long modifiable, unsigned long extractable, unsigned long sign,
-        unsigned long verify, unsigned long encrypt, unsigned long decrypt, unsigned long wrap, unsigned long unwrap,
+        unsigned long sensitive, unsigned long modifiable, unsigned long extractable, unsigned long P11HSM_sign,
+        unsigned long P11HSM_verify, unsigned long P11HSM_encrypt, unsigned long P11HSM_decrypt, unsigned long wrap, unsigned long unwrap,
         unsigned long derive, unsigned long overwrite, unsigned long* h_secret_key)
 {
     CK_RV rv;
@@ -2876,65 +2876,65 @@ int unwrap_secret_key(char* msg_buf, unsigned long msg_buf_len, unsigned long h_
     // null pointer check for private key info buffer length
     if (!h_session)
     {
-        snprintf(msg_buf, msg_buf_len, "unwrap_secret_key: h_session invalid value.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_unwrap_secret_key: h_session invalid value.");
         return FALSE;
     }
 
     // null pointer check for public key label
     if (!key_label)
     {
-        snprintf(msg_buf, msg_buf_len, "unwrap_secret_key: key_label null pointer unexpected.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_unwrap_secret_key: key_label null pointer unexpected.");
         return FALSE;
     }
 
     // check wrapping key handle
     if (h_wrap_key < 0)
     {
-        snprintf(msg_buf, msg_buf_len, "unwrap_secret_key: h_wrap_key invalid value.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_unwrap_secret_key: h_wrap_key invalid value.");
         return FALSE;
     }
 
     // check key buffer
     if (!key_buf)
     {
-        snprintf(msg_buf, msg_buf_len, "unwrap_secret_key: key_buf invalid value.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_unwrap_secret_key: key_buf invalid value.");
         return FALSE;
     }
 
     // check key buffer length
     if (key_buf_len <= 0)
     {
-        snprintf(msg_buf, msg_buf_len, "unwrap_secret_key: key_buf_len invalid value.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_unwrap_secret_key: key_buf_len invalid value.");
         return FALSE;
     }
 
     // check to make sure the public key label is not too long
     if (key_label_len > MAX_TOKEN_OBJECT_LABEL_SIZE)
     {
-        snprintf(msg_buf, msg_buf_len, "unwrap_secret_key: key_label parameter too long.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_unwrap_secret_key: key_label parameter too long.");
         return FALSE;
     }
 
     // key type check
     if (key_type < 0)
     {
-        snprintf(msg_buf, msg_buf_len, "unwrap_secret_key: key_type invalid.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_unwrap_secret_key: key_type invalid.");
         return FALSE;
     }
 
     // key type check
     if (key_size < 0)
     {
-        snprintf(msg_buf, msg_buf_len, "unwrap_secret_key: key_size invalid.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_unwrap_secret_key: key_size invalid.");
         return FALSE;
     }
 
     // make sure that the key label does not already exist on the HSM
     CK_OBJECT_HANDLE h_test = 0;
-    rv = get_object_handle(msg_buf, msg_buf_len, h_session, key_label, key_label_len, &h_test);
+    rv = P11HSM_get_object_handle(msg_buf, msg_buf_len, h_session, key_label, key_label_len, &h_test);
     if (rv == FALSE)
     {
-        snprintf(msg_buf, msg_buf_len, "unwrap_secret_key: get_object_handle failed.");
+        snprintf(msg_buf, msg_buf_len, "P11HSM_unwrap_secret_key: P11HSM_get_object_handle failed.");
         return FALSE;
     }
 
@@ -2946,14 +2946,14 @@ int unwrap_secret_key(char* msg_buf, unsigned long msg_buf_len, unsigned long h_
             rv = _p11->C_DestroyObject(h_session, h_test);
             if (rv != CKR_OK)
             {
-                snprintf(msg_buf, msg_buf_len, "unwrap_secret_key: PKCS#11 C_DestroyObject failed for secret key label '%s' with the return value %lu.", key_label, rv);
+                snprintf(msg_buf, msg_buf_len, "P11HSM_unwrap_secret_key: PKCS#11 C_DestroyObject failed for secret key label '%s' with the return value %lu.", key_label, rv);
                 __append_return_code(rv, msg_buf, msg_buf_len);
                 return FALSE;
             }
         }
         else
         {
-            snprintf(msg_buf, msg_buf_len, "unwrap_secret_key: secret key label '%s' already exists.", key_label);
+            snprintf(msg_buf, msg_buf_len, "P11HSM_unwrap_secret_key: secret key label '%s' already exists.", key_label);
             return FALSE;
         }
     }
@@ -2978,10 +2978,10 @@ int unwrap_secret_key(char* msg_buf, unsigned long msg_buf_len, unsigned long h_
                              sensitive,
                              modifiable,
                              extractable,
-                             sign,
-                             verify,
-                             encrypt,
-                             decrypt,
+                             P11HSM_sign,
+                             P11HSM_verify,
+                             P11HSM_encrypt,
+                             P11HSM_decrypt,
                              wrap,
                              unwrap,
                              derive,
@@ -2990,7 +2990,7 @@ int unwrap_secret_key(char* msg_buf, unsigned long msg_buf_len, unsigned long h_
     // evaluate return code
     if (rv != CKR_OK)
     {
-        snprintf(msg_buf, msg_buf_len, "unwrap_secret_key: __unwrap_secret_key() failed; return value %lu", rv);
+        snprintf(msg_buf, msg_buf_len, "P11HSM_unwrap_secret_key: __unwrap_secret_key() failed; return value %lu", rv);
         __append_return_code(rv, msg_buf, msg_buf_len);
         return FALSE;
     }
@@ -3001,7 +3001,7 @@ int unwrap_secret_key(char* msg_buf, unsigned long msg_buf_len, unsigned long h_
 }
 
 
-int get_mechanism_info(char* msg_buf, unsigned long msg_buf_len, unsigned long slot, char* data_buf, unsigned long* data_buf_len, unsigned long* mech_count)
+int P11HSM_get_mechanism_info(char* msg_buf, unsigned long msg_buf_len, unsigned long slot, char* data_buf, unsigned long* data_buf_len, unsigned long* mech_count)
 {
     CK_RV rv;
     CK_ULONG mech_count_1 = 0;

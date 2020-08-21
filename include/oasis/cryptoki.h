@@ -32,7 +32,7 @@ extern "C" {
 * Operating System/Platform linking constructs                               *
 *                                                                            *
 \****************************************************************************/
-#if defined(OS_WIN)
+#if defined(_WIN32)
    #define CK_ENTRY           __declspec( dllexport )
    #define CK_POINTER         *
 
@@ -50,7 +50,7 @@ extern "C" {
 
    #pragma pack(push, cryptoki, 1)
 
-#elif defined(OS_UNIX) || defined(OS_LINUX)
+#elif defined(__unix__) || defined(__linux__)
    #define CK_ENTRY
    #define CK_POINTER         *
 
@@ -75,7 +75,7 @@ extern "C" {
 
 #define CK_PTR *
 
-#include "../oasis/pkcs11.h"
+#include "pkcs11.h"
 
 
 #if defined(OS_WIN)

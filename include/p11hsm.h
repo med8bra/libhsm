@@ -29,7 +29,13 @@
 #include <dlfcn.h>
 #endif
 
-#define EXTERN_C extern
+#ifdef __cplusplus
+	#define EXTERN_C extern "C" 
+#else
+	#define EXTERN_C extern
+#endif
+
+
 
 /**
  * get_lib_version()
@@ -44,7 +50,7 @@
  * \param[in]          version_info_len             byte length of versionInfo buffer (minimum 15 bytes)
  * @return  FALSE if an error occurs otherwise TRUE
  */
-EXTERN_C int get_lib_version(char* msg_buf, unsigned long msg_buf_len, char *version_info, unsigned long version_info_len);
+EXTERN_C int P11HSM_get_lib_version(char* msg_buf, unsigned long msg_buf_len, char *version_info, unsigned long version_info_len);
 
 /**
  * connect()
@@ -60,7 +66,7 @@ EXTERN_C int get_lib_version(char* msg_buf, unsigned long msg_buf_len, char *ver
  *
  * @return  FALSE if an error occurs otherwise TRUE
  */
-EXTERN_C int connect(char* msg_buf, unsigned long msg_buf_len, char* lib_path, unsigned long lib_path_len);
+EXTERN_C int P11HSM_connect(char* msg_buf, unsigned long msg_buf_len, char* lib_path, unsigned long lib_path_len);
 
 /**
  * disconnect()
@@ -72,7 +78,7 @@ EXTERN_C int connect(char* msg_buf, unsigned long msg_buf_len, char* lib_path, u
  * \param[in]          msg_buf_len                  byte length of provided error message buffer
  * @return  FALSE if an error occurs otherwise TRUE
  */
-EXTERN_C int disconnect(char* msg_buf, unsigned long msg_buf_len);
+EXTERN_C int P11HSM_disconnect(char* msg_buf, unsigned long msg_buf_len);
 
 /**
  * initialize()
@@ -84,7 +90,7 @@ EXTERN_C int disconnect(char* msg_buf, unsigned long msg_buf_len);
  * \param[in]          msg_buf_len                  byte length of provided error message buffer
  * @return  FALSE if an error occurs otherwise TRUE
  */
-EXTERN_C int initialize(char* msg_buf, unsigned long msg_buf_len);
+EXTERN_C int P11HSM_initialize(char* msg_buf, unsigned long msg_buf_len);
 
 /**
  * finalize()
@@ -96,7 +102,7 @@ EXTERN_C int initialize(char* msg_buf, unsigned long msg_buf_len);
  * \param[in]          msg_buf_len                  byte length of provided error message buffer
  * @return  FALSE if an error occurs otherwise TRUE
  */
-EXTERN_C int finalize(char* msg_buf, unsigned long msg_buf_len);
+EXTERN_C int P11HSM_finalize(char* msg_buf, unsigned long msg_buf_len);
 
 /**
  * open_session()
@@ -123,7 +129,7 @@ EXTERN_C int finalize(char* msg_buf, unsigned long msg_buf_len);
  *
  * @return  FALSE if an error occurs otherwise TRUE
  */
-EXTERN_C int open_session(char* msg_buf, unsigned long msg_buf_len, unsigned long slot, unsigned long flags, unsigned long* h_session);
+EXTERN_C int P11HSM_open_session(char* msg_buf, unsigned long msg_buf_len, unsigned long slot, unsigned long flags, unsigned long* h_session);
 
 /**
  * close_session()
@@ -136,7 +142,7 @@ EXTERN_C int open_session(char* msg_buf, unsigned long msg_buf_len, unsigned lon
  * \param[in]          h_session                    session handle to close
  * @return  FALSE if an error occurs otherwise TRUE
  */
-EXTERN_C int close_session(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session);
+EXTERN_C int P11HSM_close_session(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session);
 
 /**
  * close_all_sessions()
@@ -149,7 +155,7 @@ EXTERN_C int close_session(char* msg_buf, unsigned long msg_buf_len, unsigned lo
  * \param[in]          slot_id                      ID of the slot to close all sessions on
  * @return  FALSE if an error occurs otherwise TRUE
  */
-EXTERN_C int close_all_sessions(char* msg_buf, unsigned long msg_buf_len, unsigned long slot_id);
+EXTERN_C int P11HSM_close_all_sessions(char* msg_buf, unsigned long msg_buf_len, unsigned long slot_id);
 
 /**
  * login()
@@ -166,7 +172,7 @@ EXTERN_C int close_all_sessions(char* msg_buf, unsigned long msg_buf_len, unsign
  * \param[in]          user_pin_len                 length of user PIN
  * @return  FALSE if an error occurs otherwise TRUE
  */
-EXTERN_C int login(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned long user_type, unsigned char* user_pin, unsigned long user_pin_len);
+EXTERN_C int P11HSM_login(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned long user_type, unsigned char* user_pin, unsigned long user_pin_len);
 
 /**
  * logout()
@@ -180,7 +186,7 @@ EXTERN_C int login(char* msg_buf, unsigned long msg_buf_len, unsigned long h_ses
  * \param[in]          h_session                    active session handle
  * @return  FALSE if an error occurs otherwise TRUE
  */
-EXTERN_C int logout(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session);
+EXTERN_C int P11HSM_logout(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session);
 
 /**
  * set_pin()
@@ -197,7 +203,7 @@ EXTERN_C int logout(char* msg_buf, unsigned long msg_buf_len, unsigned long h_se
  * \param[in]          new_pin_len                  new user PIN length
  * @return  FALSE if an error occurs otherwise TRUE
  */
-EXTERN_C int set_pin(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned char* old_pin, unsigned long old_pin_len, unsigned char* new_pin, unsigned long new_pin_len);
+EXTERN_C int P11HSM_set_pin(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned char* old_pin, unsigned long old_pin_len, unsigned char* new_pin, unsigned long new_pin_len);
 
 /**
  * find_objects()
@@ -214,7 +220,7 @@ EXTERN_C int set_pin(char* msg_buf, unsigned long msg_buf_len, unsigned long h_s
  *
  * @return  FALSE if an error occurs otherwise TRUE
  */
-EXTERN_C int find_objects(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned long* h_object_array, unsigned long* h_object_array_len);
+EXTERN_C int P11HSM_find_objects(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned long* h_object_array, unsigned long* h_object_array_len);
 
 /**
  * get_object_handle()
@@ -230,7 +236,7 @@ EXTERN_C int find_objects(char* msg_buf, unsigned long msg_buf_len, unsigned lon
  * \param[in]          h_session                    handle of an open session with the HSM
  * @return  FALSE if an error occurs otherwise TRUE
  */
-EXTERN_C int get_object_handle(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned char* object_label, unsigned long object_label_len, unsigned long* h_object);
+EXTERN_C int P11HSM_get_object_handle(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned char* object_label, unsigned long object_label_len, unsigned long* h_object);
 
 /**
  * sign()
@@ -250,7 +256,7 @@ EXTERN_C int get_object_handle(char* msg_buf, unsigned long msg_buf_len, unsigne
  * \param[in]          h_session                    handle of an open session with the HSM
  * @return  FALSE if an error occurs otherwise TRUE
  */
-EXTERN_C int sign(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned char* data_buf, unsigned long data_buf_len,
+EXTERN_C int P11HSM_sign(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned char* data_buf, unsigned long data_buf_len,
          unsigned long h_key, unsigned long mech_type, unsigned long salt_len, unsigned char* sig_buf, unsigned long* sig_buf_len);
 
 /**
@@ -273,7 +279,7 @@ EXTERN_C int sign(char* msg_buf, unsigned long msg_buf_len, unsigned long h_sess
  *
  * @return  FALSE if an error occurs otherwise TRUE
  */
-EXTERN_C int verify(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned char* data_buf, unsigned long data_buf_len, unsigned long h_key,
+EXTERN_C int P11HSM_verify(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned char* data_buf, unsigned long data_buf_len, unsigned long h_key,
            unsigned long mech_type, unsigned long salt_len, unsigned char* sig_buf, unsigned long sig_buf_len);
 
 /**
@@ -297,7 +303,7 @@ EXTERN_C int verify(char* msg_buf, unsigned long msg_buf_len, unsigned long h_se
  * @return  FALSE if an error occurs otherwise TRUE
  */
 
-EXTERN_C int encrypt(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned char* data_buf, unsigned long data_buf_len,
+EXTERN_C int P11HSM_encrypt(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned char* data_buf, unsigned long data_buf_len,
         unsigned long h_key, unsigned long mech_type, unsigned char* iv, unsigned long iv_len,
         unsigned char* encrypted_data_buf, unsigned long* encrypted_data_buf_len);
 
@@ -322,7 +328,7 @@ EXTERN_C int encrypt(char* msg_buf, unsigned long msg_buf_len, unsigned long h_s
  * @return  FALSE if an error occurs otherwise TRUE
  */
 
-EXTERN_C int decrypt(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session,
+EXTERN_C int P11HSM_decrypt(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session,
         unsigned char* data_buf, unsigned long data_buf_len, unsigned long h_decrypt_key,
         unsigned long mech_type, unsigned char* iv, unsigned long iv_len,
         unsigned char* decrypted_data_buf, unsigned long* decrypted_data_buf_len);
@@ -344,7 +350,7 @@ EXTERN_C int decrypt(char* msg_buf, unsigned long msg_buf_len, unsigned long h_s
  * @return  FALSE if an error occurs otherwise TRUE
  */
 
-EXTERN_C int digest(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned char* data_buf, unsigned long data_buf_len,
+EXTERN_C int P11HSM_digest(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned char* data_buf, unsigned long data_buf_len,
         unsigned long mech_type, unsigned char* digest_data_buf, unsigned long* digest_data_buf_len);
 
 
@@ -391,7 +397,7 @@ EXTERN_C int digest(char* msg_buf, unsigned long msg_buf_len, unsigned long h_se
  *
  * @return  FALSE if an error occurs otherwise TRUE
  */
-EXTERN_C int create_rsa_key_pair(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned long key_size,
+EXTERN_C int P11HSM_create_rsa_key_pair(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned long key_size,
         unsigned char* pub_key_label, unsigned long pub_key_label_len, unsigned char* pvt_key_label, unsigned long pvt_key_label_len,
         unsigned char* pub_key_id, unsigned long pub_key_id_len, unsigned char* pvt_key_id, unsigned long pvt_key_id_len,
         unsigned long mech_type, unsigned char* pub_exp, unsigned long pub_exp_len, unsigned long token, unsigned long pubprivate_, unsigned long pvtprivate_, unsigned long sensitive,
@@ -436,7 +442,7 @@ EXTERN_C int create_rsa_key_pair(char* msg_buf, unsigned long msg_buf_len, unsig
  *
  * @return  FALSE if an error occurs otherwise TRUE
  */
-EXTERN_C int create_ec_key_pair(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session,
+EXTERN_C int P11HSM_create_ec_key_pair(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session,
         unsigned char* ec_params, unsigned long ec_params_len,
         unsigned char* pub_key_label, unsigned long pub_key_label_len, unsigned char* pvt_key_label, unsigned long pvt_key_label_len,
         unsigned char* pub_key_id, unsigned long pub_key_id_len, unsigned char* pvt_key_id, unsigned long pvt_key_id_len,
@@ -477,7 +483,7 @@ EXTERN_C int create_ec_key_pair(char* msg_buf, unsigned long msg_buf_len, unsign
  *
  * @return  FALSE if an error occurs otherwise TRUE
  */
-EXTERN_C int create_secret_key(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session,
+EXTERN_C int P11HSM_create_secret_key(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session,
         unsigned char* key_label, unsigned long key_label_len, unsigned char* key_id, unsigned long key_id_len,
         unsigned long mech_type, unsigned long key_size,
         unsigned long token, unsigned long private_, unsigned long sensitive, unsigned long modifiable,
@@ -497,7 +503,7 @@ EXTERN_C int create_secret_key(char* msg_buf, unsigned long msg_buf_len, unsigne
  *
  * @return  FALSE if an error occurs otherwise TRUE
  */
-EXTERN_C int get_slot_count(char* msg_buf, unsigned long msg_buf_len, unsigned long* slot_count);
+EXTERN_C int P11HSM_get_slot_count(char* msg_buf, unsigned long msg_buf_len, unsigned long* slot_count);
 
 /**
  * get_token_count()
@@ -514,7 +520,7 @@ EXTERN_C int get_slot_count(char* msg_buf, unsigned long msg_buf_len, unsigned l
  *
  * @return  FALSE if an error occurs otherwise TRUE
  */
-EXTERN_C int get_token_count(char* msg_buf, unsigned long msg_buf_len, unsigned long* token_count);
+EXTERN_C int P11HSM_get_token_count(char* msg_buf, unsigned long msg_buf_len, unsigned long* token_count);
 
 
 /**
@@ -540,7 +546,7 @@ EXTERN_C int get_token_count(char* msg_buf, unsigned long msg_buf_len, unsigned 
  *
  * @return  FALSE if an error occurs otherwise TRUE
  */
-EXTERN_C int get_slot_info(char* msg_buf, unsigned long msg_buf_len, char* data_buf, unsigned long* data_buf_len, unsigned long* slot_count);
+EXTERN_C int P11HSM_get_slot_info(char* msg_buf, unsigned long msg_buf_len, char* data_buf, unsigned long* data_buf_len, unsigned long* slot_count);
 
 /**
  * get_attribute_value()
@@ -559,7 +565,7 @@ EXTERN_C int get_slot_info(char* msg_buf, unsigned long msg_buf_len, char* data_
  * \param[in]          attribute_type               valid attribute type such as CKA_PRIME_1, CKA_PRIME_2, etc
  * @return  FALSE if an error occurs otherwise TRUE
  */
-EXTERN_C int get_attribute_value(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned long h_object,
+EXTERN_C int P11HSM_get_attribute_value(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned long h_object,
         unsigned long attribute_type, unsigned char *attribute_value, unsigned long* attribute_value_len);
 
 /**
@@ -579,7 +585,7 @@ EXTERN_C int get_attribute_value(char* msg_buf, unsigned long msg_buf_len, unsig
  * \param[in]          attribute_type               valid attribute type such as CKA_PRIME_1, CKA_PRIME_2, etc
  * @return  FALSE if an error occurs otherwise TRUE
  */
-EXTERN_C int set_attribute_value(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned long h_object,
+EXTERN_C int P11HSM_set_attribute_value(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned long h_object,
         unsigned long attribute_type, unsigned char *attribute_value, unsigned long attribute_value_len);
 
 /**
@@ -596,7 +602,7 @@ EXTERN_C int set_attribute_value(char* msg_buf, unsigned long msg_buf_len, unsig
  * \param[in]          h_session                    session handle
  * @return  FALSE if an error occurs otherwise TRUE
  */
-EXTERN_C int generate_random(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned char* random_data, unsigned long random_data_len);
+EXTERN_C int P11HSM_generate_random(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned char* random_data, unsigned long random_data_len);
 
 /**
  * seed_random()
@@ -613,7 +619,7 @@ EXTERN_C int generate_random(char* msg_buf, unsigned long msg_buf_len, unsigned 
  * \param[in]          h_session                    session handle
  * @return  FALSE if an error occurs otherwise TRUE
  */
-EXTERN_C int seed_random(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned char* seed_data, unsigned long seed_data_len);
+EXTERN_C int P11HSM_seed_random(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned char* seed_data, unsigned long seed_data_len);
 
 /**
  * destroy_object()
@@ -628,7 +634,7 @@ EXTERN_C int seed_random(char* msg_buf, unsigned long msg_buf_len, unsigned long
  *
  * @return  FALSE if an error occurs; otherwise TRUE
  */
-EXTERN_C int destroy_object(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned long h_object);
+EXTERN_C int P11HSM_destroy_object(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned long h_object);
 
 /**
  * import_data_object()
@@ -651,7 +657,7 @@ EXTERN_C int destroy_object(char* msg_buf, unsigned long msg_buf_len, unsigned l
  *
  * @return  FALSE if an error occurs; otherwise TRUE
  */
-EXTERN_C int import_data_object(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session,
+EXTERN_C int P11HSM_import_data_object(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session,
         unsigned char* data_label, unsigned long data_label_len, unsigned char* data_id, unsigned long data_id_len,
         unsigned char* value, unsigned long value_len, unsigned long token, unsigned long overwrite, unsigned long* h_object);
 
@@ -682,7 +688,7 @@ EXTERN_C int import_data_object(char* msg_buf, unsigned long msg_buf_len, unsign
  * \param[in]          overwrite                    1 to indicate the an existing key pair with the same label name can be overwritten; otherwise 0
  * @return  FALSE if an error occurs; otherwise TRUE
  */
-EXTERN_C int import_rsa_public_key(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session,
+EXTERN_C int P11HSM_import_rsa_public_key(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session,
         unsigned char* key_label, unsigned long key_label_len, unsigned char* key_id, unsigned long key_id_len,
         unsigned char* exp, unsigned long exp_len, unsigned char* mod, unsigned long mod_len,
         unsigned long token, unsigned long private_, unsigned long modifiable, unsigned long verify,
@@ -715,7 +721,7 @@ EXTERN_C int import_rsa_public_key(char* msg_buf, unsigned long msg_buf_len, uns
  * \param[in]          overwrite                    1 to indicate the an existing key pair with the same label name can be overwritten; otherwise 0
  * @return  FALSE if an error occurs; otherwise TRUE
  */
-EXTERN_C int import_ec_public_key(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session,
+EXTERN_C int P11HSM_import_ec_public_key(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session,
         unsigned char* key_label, unsigned long key_label_len, unsigned char* key_id, unsigned long key_id_len,
         unsigned char* ec_params, unsigned long ec_params_len, unsigned char* ec_point, unsigned long ec_point_len,
         unsigned long token, unsigned long private_, unsigned long modifiable, unsigned long verify, unsigned long encrypt, unsigned long wrap, unsigned long overwrite, unsigned long* h_pub_key);
@@ -748,7 +754,7 @@ EXTERN_C int import_ec_public_key(char* msg_buf, unsigned long msg_buf_len, unsi
  * \param[in]          overwrite                    1 to indicate existing certificate object with the same label name can be overwritten; otherwise 0
  * @return  FALSE if an error occurs; otherwise TRUE
  */
-EXTERN_C int import_public_cert(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session,
+EXTERN_C int P11HSM_import_public_cert(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session,
         unsigned char* cert_label, unsigned long cert_label_len, unsigned char* cert_id, unsigned long cert_id_len,
         unsigned char* cert_serial, unsigned long cert_serial_len, unsigned char* cert_subject, unsigned long cert_subject_len,
         unsigned char* cert_issuer, unsigned long cert_issuer_len, unsigned char* cert_value, unsigned long cert_value_len,
@@ -774,7 +780,7 @@ EXTERN_C int import_public_cert(char* msg_buf, unsigned long msg_buf_len, unsign
  *
  * @return  FALSE if an error occurs; otherwise TRUE
  */
-EXTERN_C int wrap_key(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned long key_label,
+EXTERN_C int P11HSM_wrap_key(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session, unsigned long key_label,
         unsigned long h_wrap_key, unsigned char* iv, unsigned long iv_len, unsigned long mech_type,
         unsigned char *key_buf, unsigned long* key_buf_len);
 
@@ -811,7 +817,7 @@ EXTERN_C int wrap_key(char* msg_buf, unsigned long msg_buf_len, unsigned long h_
  * \param[out]         h_pvt_key                    object handle
  * @return  FALSE if an error occurs; otherwise TRUE
  */
-EXTERN_C int unwrapprivate__key(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session,
+EXTERN_C int P11HSM_unwrapprivate__key(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session,
         unsigned long h_wrap_key, unsigned char* iv, unsigned long iv_len, unsigned long mech_type,
         unsigned char* key_label, unsigned long key_label_len, unsigned char* key_id, unsigned long key_id_len,
         unsigned char* key_buf, unsigned long key_buf_len, unsigned long key_type,
@@ -857,7 +863,7 @@ EXTERN_C int unwrapprivate__key(char* msg_buf, unsigned long msg_buf_len, unsign
  *
  * @return  FALSE if an error occurs; otherwise TRUE
  */
-EXTERN_C int unwrap_secret_key(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session,
+EXTERN_C int P11HSM_unwrap_secret_key(char* msg_buf, unsigned long msg_buf_len, unsigned long h_session,
         unsigned long h_wrap_key, unsigned char* iv, unsigned long iv_len, unsigned long mech_type,
         unsigned char* key_label, unsigned long key_label_len, unsigned char* key_id, unsigned long key_id_len,
         unsigned char* key_buf, unsigned long key_buf_len,
@@ -889,6 +895,11 @@ EXTERN_C int unwrap_secret_key(char* msg_buf, unsigned long msg_buf_len, unsigne
  *
  * @return  FALSE if an error occurs otherwise TRUE
  */
-EXTERN_C int get_mechanism_info(char* msg_buf, unsigned long msg_buf_len, unsigned long slot, char* data_buf, unsigned long* data_buf_len, unsigned long* mech_count);
+EXTERN_C int P11HSM_get_mechanism_info(char* msg_buf, unsigned long msg_buf_len, unsigned long slot, char* data_buf, unsigned long* data_buf_len, unsigned long* mech_count);
 
+
+#undef DEF_MODULE_FUN
+#undef __MODULE_PASTE
+#undef __PASTE
+#undef EXTERN_C
 #endif
