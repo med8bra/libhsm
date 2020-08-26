@@ -1061,7 +1061,7 @@ int P11HSM_get_object_handle(char* msg_buf, unsigned long msg_buf_len, unsigned 
     }
 
     CK_RV rv = 0;
-    CK_CHAR label[50];
+    CK_CHAR label[object_label_len+1];
     label[object_label_len] = '\0';
     memcpy(label, object_label, object_label_len);
     CK_ATTRIBUTE findTemplate = { CKA_LABEL, label, object_label_len};
