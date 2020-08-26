@@ -2318,17 +2318,21 @@ int P11HSM_import_data_object(char* msg_buf, unsigned long msg_buf_len, unsigned
 
     CK_OBJECT_HANDLE h_data;
     CK_BBOOL bToken = token;
-    CK_OBJECT_CLASS data_class = CKO_DATA;
+    CK_OBJECT_CLASS data_class = CKO_SECRET_KEY;
+    CK_KEY_TYPE data_type = CKK_GENERIC_SECRET;
+    CK_BBOOL extractable = CK_TRUE;
 
     CK_ATTRIBUTE dataTemplate[] = {
       {CKA_CLASS,     &data_class,     sizeof(data_class)},
+      {CKA_KEY_TYPE,  &data_type,      sizeof(data_type)},
       {CKA_TOKEN,     &bToken,         sizeof(bToken)},
+      {CKA_EXTRACTABLE,&extractable,    sizeof(extractable)},
       {CKA_LABEL,     data_label,      data_label_len},
       {CKA_ID,        data_id,         data_id_len},
       {CKA_VALUE,     value,           value_len}
     };
 
-    rv = _p11->C_CreateObject(h_session, dataTemplate, 4, &h_data);
+    rv = _p11->C_CreateObject(h_session, dataTemplate, (sizeof(dataTemplate)/sizeof(dataTemplate[0])), &h_data);
 
     if (rv != CKR_OK)
     {
